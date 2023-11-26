@@ -1,4 +1,4 @@
-## 01-Basics of javascript part - 1
+## 01-Basics of javascript
 
 In this code example we are focusing on how to link the javascript file in HTML file and a very basic javascript code to display 'Hello World..!!' in the browser window as a popup and a way to log some message in the browser console.
 
