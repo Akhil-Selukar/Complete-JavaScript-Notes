@@ -144,3 +144,82 @@ In above example all comparisions are normal arithmetic comparisons only except 
 == check the value and not datatype as we can see `console.log(10 == "10");` gives `true` even if we are comparing number with string. As number 10 is equal to the number '10' represented as String hence it gives `true`. While '===' checks value as well as datatype, means '===' will give `true` only when both the values are equal and of same datatype otherwise it returns `false`.
 
 <em>Note - apart from above mentioned operators multiple other operators are present in javascript like conditional operator, bitwise operators, logical operators, etc.</em>
+
+## Operator precedence
+
+Operator precedence is nothing but the priority of operators and it describes which operator to execute first when there are more than one operator present in a single statement. Operator with higher precedence is executed first. Check operator precedence table at [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence)
+
+Consider below example code to understand the operator precedence.
+
+```javascript
+let firstNumber = 20 - 6;
+let secondNumber = 10 + 2;
+
+console.log(firstNumber);
+console.log(secondNumber);
+```
+
+Here in first and second line we have 2 operators each those are assignment operator (=) and subtraction and addition operator respectively. Now if we check the precedence table, the precedence of assignment operator is 2 and that of addition or subtraction is 11 which means addition and subtraction has higher precedence over assignment hence addition and subtraction will be performed first and then assignment will be done. So '20 - 6' is 14 and that 14 is will be assigned to `firstNumber` similarly '10 + 2' is 12 that 12 is assigned to `secondNumber`. so the output will be
+
+```
+14
+12
+```
+
+Now consider below example
+
+```javascript
+let a, b;
+a = b = 12 + 2 - 3;
+
+console.log(a, b);
+```
+
+Here we have declared two empty variables 'a' and 'b' then we have line `a = b = 12 + 2 - 3;`. Now if we see the precedence table, then the associativity (direction of execution) of assignment operator is 'right-to-left' means the assignment statement will always execute from right to left whereas, associativity of addition or subtraction is from 'left-to-right' means it will execute from left to right. We have already seen above that precedence of addition/subtraction is greated over assignment hence addition/subtraction will be executed first.
+Hence in above example first '12 + 2 - 3' will be calculated in left to right direction i.e.
+
+`12 + 2 - 3` will become `14 - 3` which will evaluate to 11.<br>
+So the expression will become `a = b = 11`, now assignment operation will be performed from roght to left direction. So first 'b' will be assigned the value '11' and expression will become `a = 11` and hence finally 'a' will be assigned with the value '11' and both 'a' and 'b' will have '11'.
+
+Output of above example
+
+```
+11 11
+```
+
+#### Updating operator precedence
+
+The precedence of the operator can be updated to some extent. consider below example to understand this.
+
+```javascript
+let number_1 = 10;
+let number_2 = 20;
+
+let average = number_1 + number_2 / 2;
+console.log(average);
+
+average = (number_1 + number_2) / 2;
+console.log(average);
+```
+
+In this example we have two numbers 'number_1' and 'number_2' Now when we calculate 'average' for the first time as per the precedence table division will be executed first and then addition. Hence the equation will become
+
+```
+average = 10 + 20 / 2
+
+average = 10 + 10
+
+average = 20
+```
+
+and it will give result as 20 which is wrong, obviously average of '10' and '20' is '15' and not '20'. SO we have to modify the precedence here such that addition will be performed before the division. To achieve this we have 'grouping' operator i.e. brackets () with highest precedence. As this has the highest precedence so anything grouped under a pair of bracked is executed first. So if we write the expression to calculate average as `average = (number_1 + number_2) / 2;` we modify the precedence of addition to highest because we grouped it under a pair of brackets so in this case the expression will be evaluated as follows.
+
+```
+average = (10 + 20) / 2
+
+average = 30 / 2
+
+average = 15
+```
+
+Here we are getting the correct average value and to get that we have successfully updated the precedence of + operator by using a pair of bracket to evaluate it before division.

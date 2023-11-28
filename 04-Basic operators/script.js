@@ -48,3 +48,24 @@ console.log(10 == 10);
 console.log(10 == "10");
 console.log(10 === "10");
 console.log("10" === "10");
+
+// operator precedence
+let firstNumber = 20 - 6;
+let secondNumber = 10 + 2;
+
+console.log(firstNumber);
+console.log(secondNumber);
+
+let a, b;
+a = b = 12 + 2 - 3;
+console.log(a, b);
+
+// updating precedence
+let number_1 = 10;
+let number_2 = 20;
+
+let average = number_1 + number_2 / 2;
+console.log(average);
+
+average = (number_1 + number_2) / 2;
+console.log(average);
