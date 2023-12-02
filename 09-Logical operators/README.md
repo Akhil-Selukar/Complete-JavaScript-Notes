@@ -124,3 +124,11 @@ Now the line `console.log(null && true);` will make sense. `null` is a falsy val
 Logical OR operator (`||`) looks for any truthy value and as soon as it get's the truthy value it returns that value otherwise if there is no truthy value then it returns the last value<br>.
 Now have a look at line `console.log(null || true);` here there is a true value so it returns `true`. In line `console.log("hello" || true);` both the values are truthy but as soon as the first truthy value is found the next value will not be checked and it returns the first truthy value (in this case 'hello').
 And same rule is followed in the subsiquent examples.
+
+In short the summary of all the above rules is
+
+| Operator          | Usage            | Description                                                                                                                                                                                 |
+| ----------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Logical AND (&&)  | expr1 && expr2   | Returns expr1 if it can be converted to false; otherwise, returns expr2. Thus, when used with Boolean values, && returns true if both operands are true; otherwise, returns false.          |
+| Logical OR (\|\|) | expr1 \|\| expr2 | Returns expr1 if it can be converted to true; otherwise, returns expr2. Thus, when used with Boolean values, \|\| returns true if either operand is true; if both are false, returns false. |
+| Logical NOT (!)   | !expr            | Returns false if its single operand that can be converted to true; otherwise, returns true.                                                                                                 |
