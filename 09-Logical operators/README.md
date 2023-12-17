@@ -1,4 +1,4 @@
-## 06 Javascript Logical Operators
+## 09 Javascript Logical Operators
 
 In code logical operators are used to take complex decisions.
 Below are the logical operatord present in javascript.

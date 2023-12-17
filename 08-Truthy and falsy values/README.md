@@ -1,4 +1,4 @@
-## 06 Javascript Truthy and Falsy Values
+## 08 Javascript Truthy and Falsy Values
 
 Just like Number() or String() javascript has Boolean() function which converts any value to boolean value i.e. either `true` or `false`. Those values which result in `false` when given to Boolean() function are called 'Falsy' values while the other values are called 'Truthy' values.
 

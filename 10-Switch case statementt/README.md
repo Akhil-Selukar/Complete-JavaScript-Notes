@@ -1,4 +1,4 @@
-## 06 Javascript Switch Case Statements
+## 10 Javascript Switch Case Statements
 
 Switch case ststement is basically used when we have to take multiple different decisions based on the value of a variable. The same can be achieved by using `if-else if-...-else` pattern.
 

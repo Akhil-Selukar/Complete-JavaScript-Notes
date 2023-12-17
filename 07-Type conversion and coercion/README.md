@@ -1,4 +1,4 @@
-## 06 Javascript Type Conversion and Coercion
+## 07 Javascript Type Conversion and Coercion
 
 Type conversion means when we specifically convert one datatype to anothre datatype whereas type coercion is when this happens implicitly behind the scene.
 
