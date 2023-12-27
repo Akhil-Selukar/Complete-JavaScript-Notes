@@ -103,3 +103,77 @@ subjects[4] = languages;
 ```
 
 Here we are adding a new element to the 'subjects' array and that new element is itself an array i.e. 'languages'.
+
+Till now we have seen that we can add element at specific index, but if we are not sure about the length of an Array and we want to add the element at the end then we can use `push()` method of array. Similarly we take out the last element of an array we can use `pop()` method of array. When we push any element using push() method it returns the new length of that array while when we pop last element of an array it returns the popped element.
+
+```javascript
+const skills = ["Coding", "Debugging", "Testing"];
+
+console.log(skills);
+skills.push("Devops");
+console.log(skills);
+const poppedElement = skills.pop();
+console.log(skills);
+console.log(`Popped element is ${poppedElement}`);
+```
+
+The above code will generate below output.
+
+```
+['Coding', 'Debugging', 'Testing']
+['Coding', 'Debugging', 'Testing', 'Devops']
+['Coding', 'Debugging', 'Testing']
+Popped element is Devops
+```
+
+Here we have one array named `skills` with 3 elements. When we do `skills.push("Devops);`, value 'Devops' get's added to the end of skills array so the second console.log() gives modified array with 'Devops' as fourth value. Now when we do `skills.pop()` the last element of skills array i.e. 'Devops' is popped out and stored in `poppedElement` and hence the 3rd console.log() prints only three elements i.e. the original array and the popped element has the value 'Devops'.
+
+Now similar to adding element at the end of an array we can add element at the start using `unshift()` method and take out the first element by using `shift()` method. Just like push and pop here as well unshift returns length of modified array and shift returns the element which was present at index 0 i.e. first position. Have a look at below code and it's output for better understanding.
+
+```javascript
+const skills = ["Coding", "Debugging", "Testing"];
+
+skills.unshift("GitHub");
+console.log(skills);
+const shiftedElement = skills.shift();
+console.log(skills);
+console.log(`Shifted element is ${shiftedElement}`);
+```
+
+The output of above code is.
+
+```
+['GitHub', 'Coding', 'Debugging', 'Testing']
+['Coding', 'Debugging', 'Testing']
+Shifted element is GitHub
+```
+
+Apart from this methods of array there are many other methods available. Few useful methods are given below.
+
+_indexOf()_ - This will return the inde of given element. If that element is not present then it will return -1.
+
+_includes()_ - This will return true if the given element is present in the array, otherwise it will return false.
+
+_length_ - This is not method, this is property of an array but it is very useful. It returns the number of elements present in an array.
+
+```javascript
+const skills = ["Coding", "Debugging", "Testing"];
+
+console.log(skills.indexOf("Debugging"));
+console.log(skills.indexOf("Marketing"));
+
+console.log(skills.includes("Coding"));
+console.log(skills.includes("Swimming"));
+
+console.log(skills.length);
+```
+
+thou output of above code is.
+
+```
+1
+-1
+true
+false
+3
+```

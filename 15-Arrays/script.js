@@ -18,8 +18,27 @@ subjects[2] = "Computer science";
 console.log(subjects);
 languages[5] = "C#";
 console.log(languages);
-
-// subjects[4] = languages;
-// console.log(subjects);
-
 // subjects = languages;
+
+const skills = ["Coding", "Debugging", "Testing"];
+
+console.log(skills);
+skills.push("Devops");
+console.log(skills);
+const poppedElement = skills.pop();
+console.log(skills);
+console.log(`Popped element is ${poppedElement}`);
+
+skills.unshift("GitHub");
+console.log(skills);
+const shiftedElement = skills.shift();
+console.log(skills);
+console.log(`Shifted element is ${shiftedElement}`);
+
+console.log(skills.indexOf("Debugging"));
+console.log(skills.indexOf("Marketing"));
+
+console.log(skills.includes("Coding"));
+console.log(skills.includes("Swimming"));
+
+console.log(skills.length);
