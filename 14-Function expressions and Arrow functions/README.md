@@ -1,6 +1,6 @@
-## 14 Javascript Functions Expression
+## 14 Javascript Functions Expression and Arrow Functions
 
-Function expression and function declaration are two ways to define a function.
+Function expression, function declaration and Arrow functions are three ways to define a function.
 
 In function declaration we write `function` keyword foloowed by the function name and function arguments, and then inside the curly brackets we write the steps to execute as a part of the function execution. While in function expression we define a constant variable with `const` keyword and assign the function body to that variable and we call the function with the function name.
 
@@ -81,3 +81,51 @@ Above code will give the error.
 <p style="color:red;">Uncaught ReferenceError: Cannot access 'addition2' before initialization at script.js:4:17</p>
 
 This is becausse we are trying to call the function before defining it.
+
+### Arrow Functions
+
+Arrow functions is another way to define a function. Consider below code example to understand how Arrow functions are defined.
+
+```javascript
+const addition3 = (firstNumber, secondNumber) => {
+  console.log(
+    `Adding ${firstNumber} and ${secondNumber} using arrow function.`
+  );
+  return firstNumber + secondNumber;
+};
+
+const result3 = addition3(6, 8);
+console.log("Addition using arrow function is " + result3);
+```
+
+In above example we have a constant addition3 which holds the arrow function. Now the way we deifne arrow function is, we do not use `function` keyword here. The parameters are placed under a bracked and then we have a special symbol 'Arrow' i.e. `=>` this is the reason for the name 'Arrow Function'. After the arrow symbol we have the function body. Now if the function body has only 1 line and the function has only input parameter then we can simply remove all brackets and the return keyword. The returning will happen implecitely.
+
+For example
+
+```javascript
+const welcome = firstName => (Hello, )+firstName;
+
+console.log(welcome("John"));
+```
+
+The output of above code will be
+
+```
+Hello John
+```
+
+Also if there is no input parameter to the function then we can simple use () and write the arrow function as below.
+
+```javascript
+const welcome = () => (Hello User);
+
+console.log(welcome());
+```
+
+The output for above code is
+
+```
+Hello User
+```
+
+The difference between other functions and arrow function is that in Arrow function we cant use `this` keyword or we dont have `this` instance in arrow function (The use and significance of this keyword is explained further.)
