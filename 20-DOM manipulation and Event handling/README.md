@@ -280,3 +280,154 @@ document.querySelector('.again').addEventListener('click', function () {
 here we have added an event listener for the 'Again' button and resetting the complete page except the highscore, as we want to track the highscore for all the games.
 
 > _Note -_ In this code we have repeated same code again and again many times, and that can be optimised. But the above code is to understand the concepts and DOM manipulation.
+
+## 20.2 Modal windows
+
+Modal windows are nothing but the popup windows on top of the existing webpage. These windows comes with a close button and it blur out the webpage and focus on the popup window. When we click on cose button or anywhere outside the modal window the window will close. Also on press of 'Esc' key, the window will close.
+
+> The main reason behind this section/project is to understand 'How we can manipulate classes for an html element which results in changing the styles applied to the element.'
+
+**Screenshots**
+
+**Home Screen:**
+![Modal window homeScreen(20-DOM manipulation and Event handling/images/20.2_Modal_window_homescreen.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/20-DOM%20manipulation%20and%20Event%20handling/images/20.2_Modal_window_homescreen.png)
+
+**Modal popup**
+![Modal window popup(20-DOM manipulation and Event handling/images/20.2_Modal_window_popup.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/20-DOM%20manipulation%20and%20Event%20handling/images/20.2_Modal_window_popup.png)
+
+For this section we have the html code body as below. The most important thing in this code is the class 'hidden' which is given to the modal and overlay div. This class is responsible to hide the model and the overlay (blurness of background) by default.
+
+```html
+<body>
+  <button class="show-modal">Show modal 1</button>
+  <button class="show-modal">Show modal 2</button>
+  <button class="show-modal">Show modal 3</button>
+
+  <div class="modal hidden">
+    <button class="close-modal">&times;</button>
+    <h1>This is a model window</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero minima
+      tempora doloremque cupiditate alias quasi, ullam, deleniti modi architecto
+      nam, asperiores quaerat quod illo? Magni earum consequatur repudiandae
+      eius id! Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+      Repellat, placeat? Perspiciatis, amet voluptatibus provident perferendis
+      iusto dignissimos impedit cupiditate delectus optio recusandae
+      exercitationem quia nihil nostrum corporis! Quos, quis provident!
+    </p>
+  </div>
+  <div class="overlay hidden"></div>
+
+  <script src="script.js"></script>
+</body>
+```
+
+The css for hidden class which is hiding the elements by default is.
+
+```css
+.hidden {
+  display: none;
+}
+```
+
+Now to display the modal when any of the button is clicked we will be removind this 'hidden' class from the html elements by using DOM manipulation and hence the css property associated with 'hidden' class will be removed and the respective changes will happen on the screen. Similarly to close the modal we will be addinng the same 'hidden' class again. The javascript code for this entire thing is explained below.
+
+```javascript
+'use strict';
+
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnClose = document.querySelector('.close-modal');
+const btnShow = document.querySelectorAll('.show-modal');
+
+const closeModal = function () {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
+
+for (let i = 0; i < btnShow.length; i++) {
+  btnShow[i].addEventListener('click', function () {
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+  });
+}
+
+btnClose.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+    closeModal();
+  }
+});
+```
+
+The first thing here is we want the `<div>` element for modal and overlay as we have to toggle the 'hidden' class on these two div elements. Hence we have selected those two elements by using querySelector.
+
+```javascript
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+```
+
+Also above changes must happen only when we click on any of the three buttons present and similarly we want to close the overlay whenever we click on the close (X) button on the overlay. So or this purpose we will need close button element and all the three buttons which are present on the screen. Selecting close button is using querySelector is same as we did above but for show modal buttons we have 3 buttons and all these buttons have same classes. So if we use regular querySelector then it will select only first element, hence here we have to use `querySelectorAll()` to select all the elements. This gives us the nodeList on which we can iterate using for loop.
+
+```javascript
+const btnClose = document.querySelector('.close-modal');
+const btnShow = document.querySelectorAll('.show-modal');
+```
+
+Now to manipulate/remove the class of model and overlay div whenever we click on any of the button we have to add an eventListener on show buttons. And we want to add this event listener on all the buttons hence we have written a for loop and by iterating on all the elements we have added the event listener to listen for 'click' event.
+
+```javascript
+for (let i = 0; i < btnShow.length; i++) {
+  btnShow[i].addEventListener('click', function () {
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+  });
+}
+```
+
+In above code as soon as the click event occurs, we are accessing the classList of modal and overlay element. (classList gives us the list of classes present for selected element). Now on that classlist we are calling 'remove' mehod and passing the class name of the class which we want to remove from the list or that element. (we can give multiple classes like `.remove('class1', 'class2', 'class3' );)
+
+This code will remove the class 'hidden' from the available classes on modal and overlay div. This will remove the css property `display: none;` and hence the modal will appear on the screen and overlay will also be displayed.
+
+Now as soon ass we click on close button we want to close the model and return back to main page i.e. remove the overlay. This means we again have to set css property `display: none;` on the modal and overlay div. This can be done by using '.add()' method on classList. See the code below.
+
+```javascript
+const closeModal = function () {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
+
+btnClose.addEventListener('click', closeModal);
+```
+
+Here we have again added a event listener which listens for the click event on the close button. Once we click on the close button the function closeModal will be called. Here we have defined the function outside the eventListener method. Note that we are not calling the function in eventListener i.e. we are not writing closeModal(), instead we are writing only the function name without ().
+
+In closeModal function we are simply adding the 'hidden' class to modal and overlay div by using .add() method.
+
+Now the next requirement is we also want to close the modal as soon as we click somewhere outside the modal box (i.e. on the overlay). Hence same eventListener as above, we have applied on the overlay element as well. So as soon as we click anywhere outside the modal window i.e. on the overlay, the modal 'hidden' class will be added to the modal and overlay elements and the modal will be closed and overlay will be removed.
+
+```javascript
+overlay.addEventListener('click', closeModal);
+```
+
+Here again we are using the same 'closeModal' function.
+
+Now the next important scenario we want to cover here is, we want to close the modal when 'Esc' key is pressed. Here we will see a new type of event i.e. 'keyDown'. This event will not occur on any specific element, such events are called as 'Global Events' and this events happen on document level. Have a look at below code example.
+
+```javascript
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+    closeModal();
+  }
+});
+```
+
+Here we are adding the eventListener on document as we want to check for global event. The event type here is 'keydown' which means when we press and release the button on keyboard. There are many such global events like keypress, keyup, mousedown,mousepress, etc..
+
+By using 'keydown' event we can record that the key is pressed on a keyboard, but here we want to specifically check for escape i.e. 'Esc' key. To achieve this we have to pass the event in the event listener. and by using this event object we can access many properties of the event.
+
+We are checkiing which key is pressed by using `event.key === 'Escape'`. Also we want to add the 'hidden' class in the classList ofmodel and overlay elements if the class is not already present hence we are checking `!modal.classList.contains('hidden')`. When both the conditions are true then we are again calling closeModal function to add the class 'hidden' to modal and overlay elements and hide the modal and overlay from screen.
+
+The complete javascript code is present in script.js in '20.2-Modal window' foldar.
