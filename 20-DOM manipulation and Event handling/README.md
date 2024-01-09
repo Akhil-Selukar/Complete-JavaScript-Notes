@@ -431,3 +431,156 @@ By using 'keydown' event we can record that the key is pressed on a keyboard, bu
 We are checkiing which key is pressed by using `event.key === 'Escape'`. Also we want to add the 'hidden' class in the classList ofmodel and overlay elements if the class is not already present hence we are checking `!modal.classList.contains('hidden')`. When both the conditions are true then we are again calling closeModal function to add the class 'hidden' to modal and overlay elements and hide the modal and overlay from screen.
 
 The complete javascript code is present in script.js in '20.2-Modal window' foldar.
+
+## 20.3 Dice cricket
+
+**Context -** This section is a kind of recap of all the thingss that we have learned till now. Here we are building a game called 'Dice cricket' and we will be using various DOM manipulation and other javascript concepts.
+
+**The Game -** The game and it's rules are described below.
+
+- This is a multiplayer game, two players will be playing the game.(On same system/browser.)
+- Initially the total score for both the players will be zero.
+- The game will tart from player 1, and player 1 will have to roll the dice.
+- Dice roll will generate a random number between 1 to 6.
+- If the dice gives any number except '1', then that number will be added to the 'current' score.
+- If the dice gives '1' then the player 1 is 'Out' and the current score for that player will become 0 and then player 2 can start.
+- To lock the score before getting 'Out' that player has to click on 'Add to total' button. That measn the player is satisfied with his current score and want to add that score to 'total score'.
+- If a player add his/her 'Current' score to 'Total score' his turn will be over and other player can play his/her turn now.
+- If any player does not add his/her currrent score to total score by clicking on 'Add to total' and got 'Out' by getting '1' on dice. His current score will be lost.
+- The player scoring '100' as 'Total score' first will win the game.
+
+**The UI snippit for the game -**
+<br>Start game UI:
+![Dice cricket game UI (20-DOM manipulation and Event handling/images/dice_cricket_UI.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/20-DOM%20manipulation%20and%20Event%20handling/images/dice_cricket_UI.png)
+
+Game UI for win condition:
+![Dice cricket game UI win condition (20-DOM manipulation and Event handling/images/dice_cricket_UI_win_condition.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/20-DOM%20manipulation%20and%20Event%20handling/images/dice_cricket_UI_win_condition.png)
+
+**Code and concepts -**
+
+The html code body for this game is as follows. (It is assumed that you have a basic understanding of html and css and can understand the code written below and css styles.)
+
+```html
+<body>
+  <main>
+    <section class="player player--0 player--active">
+      <h2 class="name" id="name--0">Player 1</h2>
+      <h2 class="total-score">Total score</h2>
+      <p class="score" id="score--0">0</p>
+      <div class="current">
+        <p class="current-label">Current</p>
+        <p class="current-score" id="current--0">0</p>
+      </div>
+    </section>
+    <section class="player player--1">
+      <h2 class="name" id="name--1">Player 2</h2>
+      <h2 class="total-score">Total score</h2>
+      <p class="score" id="score--1">0</p>
+      <div class="current">
+        <p class="current-label">Current</p>
+        <p class="current-score" id="current--1">0</p>
+      </div>
+    </section>
+
+    <img src="images\dice-5.png" alt="Playing dice" class="dice" />
+    <button class="btn btn--new">🔄 New game</button>
+    <button class="btn btn--roll">🎲 Roll dice</button>
+    <button class="btn btn--hold">📥 Add to total</button>
+  </main>
+  <script src="script.js"></script>
+</body>
+```
+
+Here we have two sections for two players and each player has player name, total score lable, total score value, current score lable and current score value. Apart from players section we have one image tag to display dice image and three buttons for 'new game', 'roll dice' and 'add to total' respectivelly.
+All the tags have specific class and id assigned to it so that we can use it in css and javascript.
+
+The javascript code and its explaination is given below.
+
+The first part is we have selected all the elements which are required in the above game. have a look at below element selection part in javascript code.
+
+```javascript
+const scoreElement_0 = document.querySelector('#score--0');
+const scoreElement_1 = document.getElementById('score--1');
+const currScoreElement_0 = document.getElementById('current--0');
+const currScoreElement_1 = document.getElementById('current--1');
+const playerElement_0 = document.querySelector('.player--0');
+const playerElement_1 = document.querySelector('.player--1');
+
+const diceElement = document.querySelector('.dice');
+const btnNew = document.querySelector('.btn--new');
+const btnRoll = document.querySelector('.btn--roll');
+const btnHold = document.querySelector('.btn--hold');
+```
+
+Here we are using two different syntax in first two lines.
+In first line we are we are using '#score--0' inside the querySelector whereas we were using '.className' till now this is because here we are using id instead of classname and the selector for id is #, hence we are using '#Id'. The second way to select element based on Id is by using `getElementById()` method instead of querySelector. In this method we just have to pass the Id name without any selector hence we are passing only 'score--1', 'current--0' and 'current--1' in second, third and fourth line respectively.
+
+Now the second thing we have to do is, set the initial conditions i.e. set all scores to 0, if there is any winner then remove that winner, remove the dice image and set player 1 (player 0) in javascript code as active player. Apart from setting all the scores to zero, we are setting 'gameOn' to `true`, this is because we are checking this value before we allow player to roll the dice and as soon as someone wins the game we set the 'gameOn' to `false` which will restrict any dice roll further unless we reset the game. All this operations are being done at the `init` function below.
+
+```javascript
+const init = function () {
+  totalScore = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  gameOn = true;
+
+  scoreElement_0.textContent = 0;
+  scoreElement_1.textContent = 0;
+  currScoreElement_0.textContent = 0;
+  currScoreElement_1.textContent = 0;
+  diceElement.classList.add('hidden');
+  playerElement_0.classList.add('player--active');
+  playerElement_1.classList.remove('player--active');
+  playerElement_0.classList.remove('player--winner');
+  playerElement_1.classList.remove('player--winner');
+};
+```
+
+Now consider below code where we have set the initial conditions of the game on first tile load of game and then we have a eventListener which listens for 'click' event on the 'btnRoll'.
+
+```javascript
+init();
+
+btnRoll.addEventListener('click', function () {
+  if (gameOn) {
+    // Generate randome number between 1 to 6
+    const diceNumber = Math.trunc(Math.random() * 6) + 1;
+
+    // Show dice for generate number
+    diceElement.classList.remove('hidden');
+    diceElement.src = `images\\dice-${diceNumber}.png`;
+
+    // Check for roll 1 ? Next player : add to score
+    if (diceNumber !== 1) {
+      currentScore += diceNumber;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
+    } else {
+      switchPlayer();
+    }
+  }
+});
+```
+
+The `init();` function call sets the initial game conditions at the first time load of the game. Then we have an event listener on button to roll the dice. As soon as the button is clicked, we are generating a randome number between 1 to 6 and storing the number in a local variable 'diceNumber'. Now based on the number generated we want to load the dice image. So the first thing we will have to do is remove the 'hidden' class from the image element. This is being done at line `diceElement.classList.remove('hidden');`. Now the image is loaded but we want to make sure that the image corresponding to the generated number must be diaplayed hence we are generating the source of the image based on the diceNumber at the line `` diceElement.src = `images\\dice-${diceNumber}.png`; `` Here we are updating the 'src' attribute if `<image>` element and we are generating and setting the 'src' value based on the rollNumber hence the number which was generated randomly only image corresponding to that number will be set as 'src' and displayed on the screen.
+
+Now our condition is if the dice roll is not 1 then we want to add the score to current score and keep on playing. Hence we have the if block where we are checking the score is not equal to 1 and then we are adding the diceNumber to the currentScore and displaying the currentScore to the screen. Here the important point to note is we are creating the idName dynamically in the `getElementById()` method by using `activePlayer` variable. `` document.getElementById(`current--${activePlayer}`) ``
+
+If the diceNumber is 1 then we want to switch the player and set the current score of previous player to '0'. For this we are calling the `switchPlayer` function. The main responsibility of switchPlayer function is to change the activePlayer variable, highlight the active player and set the currentScore of the previous player to '0'. Have a look at below code for switchPlayer() function.
+
+```javascript
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  currentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  if (activePlayer === 0) {
+    playerElement_1.classList.toggle('player--active');
+    playerElement_0.classList.toggle('player--active');
+  } else {
+    playerElement_1.classList.toggle('player--active');
+    playerElement_0.classList.toggle('player--active');
+  }
+};
+```
+
+In above code we are setting the current score of previous player to 0 by using line `` document.getElementById(`current--${activePlayer}`).textContent = 0; ``. Then we are setting the currentScore variable to 0 so that we can calculate the current score for new player from start. Then we are modifying the value of currentPlayer variable based on what value it was having `activePlayer = activePlayer === 0 ? 1 : 0;` means if active player was 0 then new active player will be 1 and if it was 1 then new will be 0. Now based on new activePlayer variable value we are toggling the 'player-active' class of two players in a way that the player which is active for that player only we will have this class and for other player we will not have the 'player--active' class. Hence only the active player will be highlighted.
