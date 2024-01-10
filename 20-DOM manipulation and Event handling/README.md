@@ -584,3 +584,34 @@ const switchPlayer = function () {
 ```
 
 In above code we are setting the current score of previous player to 0 by using line `` document.getElementById(`current--${activePlayer}`).textContent = 0; ``. Then we are setting the currentScore variable to 0 so that we can calculate the current score for new player from start. Then we are modifying the value of currentPlayer variable based on what value it was having `activePlayer = activePlayer === 0 ? 1 : 0;` means if active player was 0 then new active player will be 1 and if it was 1 then new will be 0. Now based on new activePlayer variable value we are toggling the 'player-active' class of two players in a way that the player which is active for that player only we will have this class and for other player we will not have the 'player--active' class. Hence only the active player will be highlighted.
+
+Now to add the current score to the total score we have button '📥 Add to total'. This button also checks for the win condition i.e. if the current players total score is more than or equal to 100 or not, if the win condition is satisfied in that case we are adding class 'player--winner' and removing class 'player--active' from the active player so that the winner will be highlighted. Also as we have winner now so we want to remove the dice image so to do this we are adding 'hidden' class to the dice image element.
+
+This win condition we want to check every time we add current score to the total score for active player. Hence before checking win condition we are adding current score to total score and displaying this score in the screen. If after adding score the win condition is false then we want to switch the player hence we are calling 'switchPlayer()' function. Check below code implementation for '📥 Add to total' button.
+
+```javascript
+btnHold.addEventListener('click', function () {
+  if (gameOn) {
+    // Add current score to total score
+    totalScore[activePlayer] += currentScore;
+    document.getElementById(`score--${activePlayer}`).textContent =
+      totalScore[activePlayer];
+
+    // Check win condition
+    if (totalScore[activePlayer] >= 100) {
+      gameOn = false;
+      diceElement.classList.add('hidden');
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--active');
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+    } else {
+      switchPlayer();
+    }
+  }
+});
+```
+
+At the end we are adding an event listener to 'New game' button to and calling init() function so that we can start new game and set all the initial conditions. `btnNew.addEventListener('click', init);`
