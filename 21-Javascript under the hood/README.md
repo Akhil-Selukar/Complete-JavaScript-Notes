@@ -60,3 +60,75 @@ The first step (step 1) as soon as javascript code enters the JS engine is to pa
 The next step (step 2) is the compilation. This step takes the AST and convert it into the machine code. This machine code gets executed right away (Step 3) as javascript uses just in time compilation.
 
 Now here the code starts to execute. But modern javascript engines creates a very unoptimised version of compiled machine code in the begining to start the execution as soon as possible. Now this unoptimized code is optimized and reompiled again and again during the execution (Step 4) to get the more and more optimized code. The optimmized code is simply swapped with the unoptimized code during the execution. This proess happens multiple time and runs on special internal threads which can't be accessed by us from outside.
+
+Now above is the very high level explination of how javascript engine works. Now lte's see in details how javascript code is executed. Every javascript code is executed in
+'Execution context'. Execution context is nothing but the environment in which javascript code is executed. execution context contains all the necessary information required for the code to execute like all variables and objects.
+
+The first thing which happens after the compiled code reaches to execution is the creation of 'global execution context'. This is basically for the top level code. consider below code.
+
+```javascript
+const num_1 = 10;
+const num_2 = 20;
+
+console.log("Addition operation");
+
+function addNumbers(x, y) {
+  logNumbers(x, y);
+  return x + y;
+}
+
+function logNumbers(x, y) {
+  console.log(`adding ${x} and ${y}`);
+}
+
+const result = addNumber(num_1, num_2);
+```
+
+Here the global execution context which will be created just after compilation will have constant 'num_1' and 'num_2' and the function definations for both the functions but the functions will not be executed. (<em>Note that in a javascript code there can be only one **global** execution context</em>).
+
+Now once the global execution context is created the execution of code starts (i.e. computer CPU process the machine code received.). And once the top level code is executed the functions starts executing. While executing the functions for each and every function call new executing context is created which contains all the necessary information which is required to eecute that function. Same is trrue for methods as well. (All this execution contexts together creates call stack.)
+
+All execution contexts contains below information.
+
+- Variables (i.e. let, const, var)
+- Function of which that execution context is.
+- Arguments object (A special object which contains all the arguments passed to the function. This is an. This stores the arguments in an array.)
+- Scope chain for variables
+- this keyword/object
+
+**Important note -** Execution context belonging to arrow functions do not get the arguments object and this keyword. They can use the arguments and this keyword of it's closest regular parent function.
+
+Now the execution contexts for the above example will be as shown below.
+
+![JS Execution context (21-Javascript under the hood/images/Execution_Context.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/Execution_Context.png)
+
+Now in the above example we have called function 'addNumbers' form global execution context and the function 'logNumbers' from the addNumbers execution context. So it is important to keep track of in which order execution context's need to be called/executed. In this eample we only have 3 execution contexts but in actual application there might be hundred's of execution contexts available and they can be called from different other execution context. So this tracking of order is done by 'Call stack'. So what is 'call stack'?
+
+Call stack is a place in javascript engine where execution contexts get stacked on top of each other to keep track of where we are in the execution. The execution context which is on the top of the stack is the one which is currently running and once the execution of that execution context is done it is removed from the stack and if any function call happens then the execution context related to that function is added to the top of the stack and executed.
+
+Now to understand this better again consider the example above.
+As soon as the conde is compiled it starts to execute the top level code and hence the global execution context is created and put in the call stack. Now the global execution context is the only context available and it is at the top hence it starts to execute. Here first the two variables will be defined and then the `console.log("Addition operation");` will be executed and message will be logged.
+
+![Call stack 1 (21-Javascript under the hood/images/Call_Stack_1.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/Call_Stack_1.png)
+
+As soon a the execution reaches to the line `const result = addNumber(num_1, num_2);`. To call the 'addNumbers' function it's
+execution context will be added to the call stack on top of global execution context. Now the topmost context in call stack is addNumbers. So it will start execution of addNumbers function.
+
+![Call stack 2 (21-Javascript under the hood/images/Call_Stack_2.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/Call_Stack_2.png)
+
+The first line in addNumbers function is the function call to 'logNumbers' function. So as soon as the line `logNumbers(x, y);` executes the execution context of 'addNumbers' function will be added in the call stack and as this will be at the top so this execution context start the execution of function logNumbers and the execution of addNumbers will be paused. (Refer below image.)
+
+![Call stack 3 (21-Javascript under the hood/images/Call_Stack_3.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/Call_Stack_3.png)
+
+Once the execution of logNumbers is completed the execution context for logNumber will be removed from the call stack and the paused execution of addNumber will start again and it will
+execute the line `return x + y;` which will return the result '30'.
+
+![Call stack 4 (21-Javascript under the hood/images/Call_Stack_4.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/Call_Stack_4.png)
+
+Once the execution of addNumber function is completed the execution context for addNumber will also be reoved from the call stack and the global execution context will be the only context remaining in the call stack and the value of result will be udated to 30 in global execution context.
+
+![Call stacck 5 (21-Javascript under the hood/images/Call_Stack_5.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/Call_Stack_5.png)
+
+This is how a javascript code is executed in the javascript engine and call stack is used to keep track of the order of execution of functions and nested function calls.
+
+_Note : Ideally global execution context will be removed from the call stack only when we close the browser. Means the global execution context will be there in the stack even if there is notthing to execute the code and this is the reason we can directly write the code in browser's console and it gives us the output because global execution context is still present in the call stack. (In the images above it is removed in last step to make it easy to understand.)_
