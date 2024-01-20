@@ -132,3 +132,102 @@ Once the execution of addNumber function is completed the execution context for 
 This is how a javascript code is executed in the javascript engine and call stack is used to keep track of the order of execution of functions and nested function calls.
 
 _Note : Ideally global execution context will be removed from the call stack only when we close the browser. Means the global execution context will be there in the stack even if there is notthing to execute the code and this is the reason we can directly write the code in browser's console and it gives us the output because global execution context is still present in the call stack. (In the images above it is removed in last step to make it easy to understand.)_
+
+### Scope of variable and scope chain<hr>
+
+Scope or variable scope tells us where exactly a variable in the javascript code is accessable and where we are not allowed to access it. So scoping is a way in which javascript organize and access variables.
+
+Javascript follows 'Lexical scoping' meaning access is controlled by the placement of functions and code blocks. In simple words lexical scoping gives function an abililty to access variables from it's parent but parent can not access the variable of it's child.
+
+In javascript we have three sccopes
+
+1. Global scope - This is the top level scope. All the variables declared outside any function or block are under global scope and these variables will be accessable in all the functions. have a look at below example.
+
+```javascript
+const minBalance = 500;
+
+function termsAndConditions() {
+  console.log(`The minimum balance for savings account is ${minBalance}`);
+}
+
+console.log(`Minimum balance variable has value ${minBalance}`);
+```
+
+In the above example the variable 'minBalance' is declared outside of any function hence it is a globally scoped variable and all the functions will be able to access the variable. Hence we are allowed to use the variable in 'termsAndConditions' function as well as in the console.log() which is not under any function.
+
+2. Function scope - Function scoped variables are only accessable inside the function and the code blocks inside the functions. Consider below example.
+
+```javascript
+function termsAndConditions() {
+  const minBalance = 500;
+  console.log(`The minimum balance for savings account is ${minBalance}`);
+}
+
+console.log(`Minimum balance variable has value ${minBalance}`);
+```
+
+Here in this example the variable 'minBalance' is defined inside the function 'termsAndConditions' hence it is a function scopped variable and this will only be accessable inside the function. The line `` console.log(`Minimum balance variable has value ${minBalance}`); `` is outside the function and we are trying to access the variable 'minBalance' here. As the variable is function scoped here the code will give reference error.
+
+3. Block scope - Since ES6 block scope is introduced. This scope means that the variables declared inside any code block are accessable only inside the block. for example consider below code.
+
+```javascript
+function termsAndConditions(acccountType) {
+  if (accountType === "savings") {
+    const minBalance = 500;
+    console.log(`The minimum balance for savings account is ${minBalance}`);
+  }
+
+  console.log(`Default minimum balance is ${minBalance}`);
+}
+
+console.log(`Minimum balance variable has value ${minBalance}`);
+```
+
+Here in above code the variable 'minBalance' is declared inside the if block hence it is block scopped and will be accessable only inside the if block. The line `` console.log(`Default minimum balance is ${minBalance}`); `` is outside the if block hence this will give reference error. Also `` console.log(`Minimum balance variable has value ${minBalance}`); `` this line is outside the function hence we will not be able to use the 'minBalance' variable here and it will give reference error.
+
+The important point to remember here is '**Block scope is only applicable for variables defined using `let` and `const`. All the variables inside any block but defined using `var` keyword is function/global scoped based on where the code block is placed.**'
+
+Now to understand the scope chain consider below code example.
+
+```javascript
+const accountType = "savings";
+const userName = "John";
+
+function termsAndConditions(accountType, userName) {
+  const branch = "Texas";
+
+  if (accountType === "savings") {
+    const minBalance = 500;
+    var loanAllowed = false;
+
+    console.log(
+      `As your account is ${accountType}, your minimum balance should be ${minBalance} and you load eligibility is ${loanAllowed}.`
+    );
+  }
+
+  function welcome(userName) {
+    const bankName = "SBI";
+    console.log(
+      `Hello ${userName}, thanks for choosing ${bankName}, ${branch}.`
+    );
+    console.log(`Your loan eligibility is ${loanAllowed}`);
+  }
+}
+```
+
+In the above example we have two variables 'accountType' and 'userName' at global scope as those are declared at global level.
+Then we have 'branch' variable which is declared inside a function 'termsAndConditions' so the scope of branch variable is function scope. Inside this function we have a child function called welcome and again we have a function scopped variable 'bankName' for welcome function. 'minBalance' and 'loanAllowed' are the two variables defined inside the if block. Here main balance is defined with `const` hence it is blocked scope variable while 'loanAllowed' is defined using `var` hence it is the function scopped variable in the function 'termsAndConditions' (i.e. parent function of the block.)
+
+Now to understand which variable is accessable where have a look at below diagram.
+
+![Scope chain (21-Javascript under the hood/images/Scope_chain.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/Scope_chain.png)
+
+Here we can see that the global scope variable can be accessed from all the other scopes as global scope is the (direct or indirect) parent to other scopes. Hence 'accountType' and 'userName' are the two variables which can be accessed from everywhere in the code and hence they are present in all the scopes.
+
+The variable 'branch' which is defined in the function scope of the function 'termsAndConditions' is accessable from all childrens of the function but not from the global scope because as per lexical scoping child can access parents variable but parent can't access chield's.
+
+Now inside if block we have two variables. One is defined with `const` and another is defined with `var`. If block creates the block scope and as mentioned earlier variables defined with only 'const' and 'let' are blocked scopped hence 'loanAllowed' is not a block scopped variable and hence it goes into it's nearest parent scope which is 'termsAndCondition' function scope. While 'minBalance' remain in the block scope as it is defined with `const`.
+
+Now if block scope and welcome function scope both are at the same level and share same parent which is termsAndCondition scope, but stil 'minBalance' which is present in block scope is not accessable in welcome function scope and same 'bankName' deined in function scope is not accessable in block scope.
+
+From above diagram and explaination we can clearly see that each function or block first find the variable in it's own scope, if it is not present then it look for it in it's parent scope if not there then again grand parent scope and so on. Means it keep going up till the global scope. This thing is called as scope chain. It is not possible in reverse direction i.e. from top to bottom.
