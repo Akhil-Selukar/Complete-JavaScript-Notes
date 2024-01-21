@@ -90,8 +90,8 @@ Now once the global execution context is created the execution of code starts (i
 
 All execution contexts contains below information.
 
-- Variables (i.e. let, const, var)
-- Function of which that execution context is.
+- Variables environment (i.e. let, const, var)
+- Function of which that execution context is (i.e. the function code).
 - Arguments object (A special object which contains all the arguments passed to the function. This is an. This stores the arguments in an array.)
 - Scope chain for variables
 - this keyword/object
@@ -231,3 +231,32 @@ Now inside if block we have two variables. One is defined with `const` and anoth
 Now if block scope and welcome function scope both are at the same level and share same parent which is termsAndCondition scope, but stil 'minBalance' which is present in block scope is not accessable in welcome function scope and same 'bankName' deined in function scope is not accessable in block scope.
 
 From above diagram and explaination we can clearly see that each function or block first find the variable in it's own scope, if it is not present then it look for it in it's parent scope if not there then again grand parent scope and so on. Means it keep going up till the global scope. This thing is called as scope chain. It is not possible in reverse direction i.e. from top to bottom.
+
+### Hoisting and TDZ (Temporal Dead Zone)<hr>
+
+In javascript some type of variables are accessable even before they are actually declared, this is called as hoisting in javasctript. In simpler words variables are lifted to the top of their scope. This happens because before execution the code is scanned for the variable declaration and for each variable a new property is created in the variable environment object.
+
+Now let's see what all things are hoisted and how it behaves.
+
+1. Function declaration: <br>Function declaration arehoisted and their value is set to the actual function hence function defined using function declaration can be used in the code before it's declaratiion (i.e. in the code we can call the function above it's declaration.)
+2. Variables declared with `var`: <br>Variables declared with var are also hoisted and the actual value of these variables is set 'toundefined'. So variables declared with var can also be used above it's declaration.
+3. Variables declared with `let` and `const`: <br>The variables declared with 'let' and 'const' are not hoisted so we can not use these variables above it's declaration. Also these variables are function scoped hence the part of function from the starting till the line where the variable is declared is called as TDZ (Temporal dead zone) for that variable. i.e. being function scope the variable is accessable inside the function but as it is not hoisted hence the code which is above the variable declaration but inside the function is the code where that variable is not accessable. Consider below code to understand TDZ better.
+
+```javascript
+const bankName = "SBI";
+
+if (bankName === "SBI") {
+  console.log(`You are associated with ${bankName}, ${bankLocation}`);
+  const interestRate = 5.0;
+  const bankLocation = "Texas";
+  console.log(
+    `Rate of interest at ${bankName}, ${bankLocation} is ${interestRate}`
+  );
+}
+```
+
+Here the 'bankName' variable is global scopped variable and hence accessable everywhere. Now if we see 'bankLocation' variable, it is declared with const hence it will be block scopped so it must be accessable only inside the if block. But as it is declared with const it is not hoisted so the code inside if block before declaration of variable 'bankLocation' is the TDZ for 'bankLocation' variable i.e. we can ont access the variable there. Hence `` console.log(`You are associated with ${bankName}, ${bankLocation}`); `` will give the reference error as the line is TDZ for bankLocation variable and we are accessing bankLocation in that line.
+
+![TDZ image (21-Javascript under the hood/images/TDZ.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/TDZ.png)
+
+4. Function expression or arrow fiunction: <br>Function expressions or arrow functions are hoisted or not is dependent on how it is declared, means if it is declared with `let` or `const` then it is not hoisted but if it is declared with `var` then it is hoisted. This is the main reason behind why we cannot access the function expression before it is defined in the code unlike function declaration.
