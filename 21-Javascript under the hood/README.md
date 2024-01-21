@@ -260,3 +260,64 @@ Here the 'bankName' variable is global scopped variable and hence accessable eve
 ![TDZ image (21-Javascript under the hood/images/TDZ.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/21-Javascript%20under%20the%20hood/images/TDZ.png)
 
 4. Function expression or arrow fiunction: <br>Function expressions or arrow functions are hoisted or not is dependent on how it is declared, means if it is declared with `let` or `const` then it is not hoisted but if it is declared with `var` then it is hoisted. This is the main reason behind why we cannot access the function expression before it is defined in the code unlike function declaration.
+
+### 'this' keyword in javascript.<hr>
+
+This keyword is a special type of variable which is created in every execution context and it has the value of the owner of that function/method call or the object on which that function/method is called.
+
+Consider below example.
+
+```javascript
+const customer = {
+  name: "John doe",
+  yearOfBirth: 1993,
+  greet: function () {
+    console.log(`Hello ${this.name}, How are you?`);
+  },
+};
+
+customer.greet();
+```
+
+The output for above code will be
+
+```
+Hello John doe, How are you?
+```
+
+Here as we can see that at line `customer.greet();` we are calling greet method on customer object and hence the 'this' keyword will have customer object as it's value. Hence inside the greet function when we access `this.name` we get name from customer object which is "John doe".
+
+Now if we replace function declaration to arrow function let's check the output.
+
+```javascript
+const customer = {
+  name: "John doe",
+  yearOfBirth: 1993,
+  greet: () => {
+    console.log(`Hello ${this.name}, How are you?`);
+  },
+};
+
+customer.greet();
+```
+
+Now the output of above code will be.
+
+```
+Hello , How are you?
+```
+
+Here we are not getting any value for name because arrow functions does not get their own this keyword instead the this keyword acquire the value of parent's object. Here the parent for customer object is window objetc and inside the window object we dont have any name variable hence it is not printed in the output. If we log the this object in this case we can clearly see that this keyword contain window object.
+
+```javascript
+const customer = {
+  name: "John doe",
+  yearOfBirth: 1993,
+  calcAge: () => {
+    console.log(2023 - this.yearOfBirth);
+  },
+  calcAge,
+};
+```
+
+Now the output of above code will print window object.
