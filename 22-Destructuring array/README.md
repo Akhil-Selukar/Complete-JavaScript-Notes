@@ -1,4 +1,4 @@
-## 19 Javascript Destructuring Array
+## 22 Javascript Destructuring Array
 
 Destructuring is a modern javascript feature of extracting elements from an array or an object into individual variables.
 
