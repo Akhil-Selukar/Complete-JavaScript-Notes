@@ -53,3 +53,57 @@ const theMap = new Map();
 const keyArray = [1, 2];
 theMap.set(keyArray, "Map value");
 console.log(theMap.get(keyArray));
+
+const mcq = new Map([
+  ["question", "Which of the following is not one of the rainbow colors?"],
+  [1, "Red"],
+  [2, "Orange"],
+  [3, "Pink"],
+  [4, "Green"],
+  ["answerKey", 3],
+  [true, "You'r answer is correct..!"],
+  [false, "Sorry, but wrong answer..!"],
+]);
+
+// console.log(mcq);
+
+// // convertion of object to map
+// const rainbowObject = {
+//   color1: "Violet",
+//   color2: "Indigo",
+//   color3: "Blue",
+//   color4: "Green",
+//   color5: "Yellow",
+//   color6: "Orange",
+//   color7: "Red",
+// };
+
+// const rainbowMap = new Map(Object.entries(rainbowObject));
+
+// console.log(rainbowMap);
+
+console.log(mcq.get("question"));
+
+for (const [key, value] of mcq) {
+  if (typeof key === "number") {
+    console.log(`Option ${key} : ${value}`);
+  }
+}
+
+const userSelection = 3;
+console.log(mcq.get(userSelection === mcq.get("answerKey")));
+
+// // converting map to array
+// const friends = new Map([
+//   [1, "Leonard"],
+//   [2, "Sheldon"],
+//   [3, "Amy"],
+//   [4, "Penny"],
+// ]);
+
+// console.log(friends);
+
+// console.log([...friends]);
+
+// console.log([...friends.keys()]);
+// console.log([...friends.values()]);

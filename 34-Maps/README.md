@@ -224,3 +224,198 @@ console.log(theMap.get(keyArray));
 Now in this case the output will be as epected. i.e. `Map value`.
 
 As of now it is hard to understand the actual usecase of this type of implementation of using Object as a key but while working with DOM in real world applications it is common to fetch Object inside the DOM by using queryselector and using it as a key in map.
+
+### More on maps
+
+#### Creation of map without using set() method
+
+We have already seen creation of an empty map and then popuating values in the empty map using set() method, but there is anothe way to create and populate a map with values without using set() method. We can pass an array or array while declaration itself and this will populate the map with values. Have a look at belo code.
+
+```javascript
+const mcq = new Map([
+  ["question", "Which of the following is not one of the rainbow colors?"],
+  [1, "Red"],
+  [2, "Orange"],
+  [3, "Pink"],
+  [4, "Green"],
+  ["answerKey", 3],
+  [true, "You'r answer is correct..!"],
+  [false, "Sorry, but wrong answer..!"],
+]);
+
+console.log(mcq);
+```
+
+In above example we have declared a map 'mcq' using `new` keyword and while declaring it we have passed an array of array. Each sub-array has two values, first will work as key and second will be stored as value associated to that key. In above example we have created a multiple choice question and the first entry in the map will be because of array `["question", "Which of the following is not one of the rainbow colors?"]` where 'question' will become the key and 'Which of the following is not one of the rainbow colors?' will become the actual value for 'question' key. Similarly second entry will be because of `[1, "Red"]` where 1 will be the key and 'Red' will be the value and so on. If we print the created map the output will be.
+
+```
+{
+  'question' => 'Which of the following is not one of the rainbow colors?',
+  1 => 'Red',
+  2 => 'Orange',
+  3 => 'Pink',
+  4 => 'Green',
+  'answerKey' => 3,
+  true => 'You'r answer is correct..!',
+  false => 'Sorry, but wrong answer..!'
+}
+```
+
+Now from article [32-Looping objects](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/32-Looping%20objects) we already know that `Object.entries()` method also return array of array i.e. nested array of properties and values. So by using this we can convers a object to map.
+
+```javascript
+const rainbowObject = {
+  color1: "Violet",
+  color2: "Indigo",
+  color3: "Blue",
+  color4: "Green",
+  color5: "Yellow",
+  color6: "Orange",
+  color7: "Red",
+};
+
+const rainbowMap = new Map(Object.entries(rainbowObject));
+
+console.log(rainbowMap);
+```
+
+In above code we have created an object called `rainbowObject` with seven colors of the rainbow. Now at line `const rainbowMap = new Map(Object.entries(rainbowObject));` we have declared a map using `new` keyword and used Object.entries() method. Now here `Object.entries(rainbowObject)` will return a nested array which will have values like below.
+
+```
+[["color1", "Violet"], ["color2","Indigo"], ........]
+```
+
+This is the exact structure we need while creating a map without using set() method hence when we give this output while creating map it successfully creates the map and we get below output.
+
+```
+{
+  'color1' => 'Violet',
+  'color2' => 'Indigo',
+  'color3' => 'Blue',
+  'color4' => 'Green',
+  'color5' => 'Yellow',
+  'color6' => 'Orange',
+  'color7' => 'Red',
+}
+```
+
+#### Iterating map
+
+As maps are iterable hence we can iterate over map using for loop. Have a look at below example.
+
+```javascript
+const mcq = new Map([
+  ["question", "Which of the following is not one of the rainbow colors?"],
+  [1, "Red"],
+  [2, "Orange"],
+  [3, "Pink"],
+  [4, "Green"],
+  ["answerKey", 3],
+  [true, "You'r answer is correct..!"],
+  [false, "Sorry, but wrong answer..!"],
+]);
+
+console.log(mcq.get("question"));
+
+for (const [key, value] of mcq) {
+  if (typeof key === "number") {
+    console.log(`Option ${key} : ${value}`);
+  }
+}
+```
+
+In above code we are using the same `mcq` map created above. Now the requirement is we want to print the question fiest and then we want to print all the available options for the questions, but we are not sure about the number of options available for the questions hence we can't keep on using .get() method and specify the keys for options. So in this case for getting the options we must iterate over the map and we can see that for option keys are numeric hence we can apply condition that if key is of type 'number' then that one is the option and we want to print that. The iteration part `for (const [key, value] of mcq)` is exactly same as that of iterating over object the only difference is while iterating over object we have to get the entries from the object first as objects are not iterable and hence we use `Object.entries()` method, but as maps are iterable hence we can directly specify the name of map which we want to loop over.
+The output of above code will be.
+
+```
+Which of the following is not one of the rainbow colors?
+Option 1 : Red
+Option 2 : Orange
+Option 3 : Pink
+Option 4 : Green
+```
+
+To just understand the power of having boolean values as keys consider below scenario and code example.
+Consider that you have displayed this question to user on frontend and you have asked uset to select the correct option and you are storing the option number selected by user in a variable called `userSelection` and now your task is to check the answer selected by user against the correct answer present in the map with kay `answerKey` and based on that you have to print wither 'You'r answer is correct..!' or 'Sorry, but wrong answer..!'
+
+```javascript
+const mcq = new Map([
+  ["question", "Which of the following is not one of the rainbow colors?"],
+  [1, "Red"],
+  [2, "Orange"],
+  [3, "Pink"],
+  [4, "Green"],
+  ["answerKey", 3],
+  [true, "You'r answer is correct..!"],
+  [false, "Sorry, but wrong answer..!"],
+]);
+
+console.log(mcq.get("question"));
+
+for (const [key, value] of mcq) {
+  if (typeof key === "number") {
+    console.log(`Option ${key} : ${value}`);
+  }
+}
+
+const userSelection = 3;
+console.log(mcq.get(userSelection === mcq.get("answerKey")));
+```
+
+In the above example we have considered that user selected 3rd option and hence value of `userSelection` variable is 3. Now at line `console.log(mcq.get(userSelection === mcq.get("answerKey")));` we are directly using the comparison `userSelection === mcq.get("answerKey")` and checking that the answer selected by user is equal to the answerKey stored in the map. This comparison will generate a boolean value, and that boolean value we are passing to the .get(). This is where having boolean keys will do it's work based on the output of comparison we will get the appropriate message and we dont have to write two different console.log() statements for correct answer and wrong answer.
+
+Now in some cases if we want to convert the map to an array (nested array) we can use spread operator and do the same.
+
+```javascript
+const friends = new Map([
+  [1, "Leonard"],
+  [2, "Sheldon"],
+  [3, "Amy"],
+  [4, "Penny"],
+]);
+
+console.log(friends);
+
+console.log([...friends]);
+```
+
+The output of above code is.
+
+```
+{
+  1 => 'Leonard',
+  2 => 'Sheldon',
+  3 => 'Amy',
+  4 => 'Penny',
+}
+
+[
+  [1, 'Leonard'],
+  [2, 'Sheldon'],
+  [3, 'Amy'],
+  [4, 'Penny'],
+]
+```
+
+In above output we can see that the spread operator converted the map to nested array.
+
+Apart from this we do have keys() and values() methods available on map and those will return an iterator hence we can spread them and convert them to an array to use in the code.
+
+```javascript
+const friends = new Map([
+  [1, "Leonard"],
+  [2, "Sheldon"],
+  [3, "Amy"],
+  [4, "Penny"],
+]);
+
+console.log([...friends.keys()]);
+console.log([...friends.values()]);
+```
+
+The output for above code will be.
+
+```
+[1, 2, 3, 4]
+['Leonard', 'Sheldon', 'Amy', 'Penny']
+```
