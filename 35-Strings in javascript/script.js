@@ -59,3 +59,42 @@ console.log(billString.endsWith("five."));
 console.log(billString.endsWith("two."));
 console.log(billString.includes("bag"));
 console.log(billString.includes("cart"));
+
+const sheldon = {
+  fullName: "sheldone cooker",
+  friends: ["penny", "leonard", "amy", "raj", "bernadatte", "howard"],
+};
+
+const [firstName, lastName] = sheldon.fullName.split(" ");
+console.log(firstName);
+console.log(lastName);
+
+const allFriends = sheldon.friends.join(", ");
+console.log(allFriends);
+
+const capitalizeName = function (userName) {
+  const allWords = userName.split(" ");
+  const formattedWords = [];
+
+  for (const word of allWords) {
+    formattedWords.push(word.replace(word[0], word[0].toUpperCase()));
+  }
+  return formattedWords.join(" ");
+};
+
+const formattedName = capitalizeName(sheldon.fullName);
+console.log(formattedName);
+
+// Padding the string
+const firstString = "Hello";
+const secondString = "This string is more than 10 character long";
+
+console.log(firstString.padStart(10, "*"));
+console.log(secondString.padStart(10, "*"));
+
+console.log(firstString.padEnd(10, "*"));
+console.log(secondString.padEnd(10, "*"));
+
+const alert = "ALERT..!!⚠️";
+
+console.log(alert.repeat(10));

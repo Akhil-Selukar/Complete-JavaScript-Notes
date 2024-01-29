@@ -215,3 +215,118 @@ console.log(billString.toLowerCase().includes("cart"));
 ```
 
 The output will still remain the same.
+
+Consider we are getting users information from some third party API in a json form. In the received json we have user's name as 'fullName' which has first name and last name separated by a space. But in our program we want first name and last name separated. In such scenario we can use split() method and specify the seperator (the string/word/charactor based on which we want to split the string). This return an array of splitted strings. As we are getting an array hence we can use destructuring of array to get first and last name in two separate variables.
+
+```javascript
+const sheldon = {
+  fullName: "sheldone cooker",
+  friends: ["penny", "leonard", "amy", "raj", "bernadatte", "howard"],
+};
+
+const [firstName, lastName] = sheldon.fullName.split(" ");
+console.log(firstName);
+console.log(lastName);
+```
+
+In above example we are using split() method on fullName string of sheldon object and we are spliting the full name based on a void space hence we will get an array of two strings in which first string will be first name and second string will be last name. By using array destructuring we are getting both first and last name in two different variables. The output of above code will be.
+
+```
+sheldon
+cooper
+```
+
+Now, in same response we are also receiving names of all friends that sheldon have. But those names are present in an array but let's say we want a single string of all the names seperated by comma (,). In this scenario we can use join() method and pass the delimiter (the word/letter/charactor using which we want to join the elements of an array)
+
+```javascript
+const sheldon = {
+  fullName: "sheldone cooker",
+  friends: ["penny", "leonard", "amy", "raj", "bernadatte", "howard"],
+};
+
+const allFriends = sheldon.friends.join(", ");
+console.log(allFriends);
+```
+
+The output of above code will be a string containing all friends name separated by comma.
+
+```
+penny, leonard, amy, raj, bernadatte, howard
+```
+
+Now let's see one of the usecase of split() and join() methods.
+In above example we are getting fulName in all small letters but what we need in our code is capitalized full name (Sheldon Cooper), so we can write a function like beliw for this task.
+
+```javascript
+const sheldon = {
+  fullName: "sheldone cooker",
+  friends: ["penny", "leonard", "amy", "raj", "bernadatte", "howard"],
+};
+
+const capitalizeName = function (userName) {
+  const allWords = userName.split(" ");
+  const formattedWords = [];
+
+  for (const word of allWords) {
+    formattedWords.push(word.replace(word[0], word[0].toUpperCase()));
+  }
+  return formattedWords.join(" ");
+};
+
+const formattedName = capitalizeName(sheldon.fullName);
+console.log(formattedName);
+```
+
+In the bove code, the capitalizeName function first split the username (i.e. received fullname) by void space. Then by using for of loop we are looping over all the words received after spliting. The line `word.replace(word[0], word[0].toUpperCase())` line inside the loop replace the first letter of each word (i.e. letter at index 0 as strings are iterables) with uppercase of the same letter and add the modified word into the array formattedWords. After that by using join method we are converting the array of updated words into full name again with capitalized full name.
+
+The output of above code will be.
+
+```
+Sheldon Cooper
+```
+
+Apart from above we can add padding to the start or end of the string. Padding means adding empty spaces or specific character to make the string length to specific predefined value. For example let's say we want our string to be minimum of 10 character and if the string has less than 10 character then we want to add '\*' at the start of the string to make it's length as 10.
+
+```javascript
+const firstString = "Hello";
+const secondString = "This string is more than 10 character long";
+
+console.log(firstString.padStart(10, "*"));
+console.log(secondString.padStart(10, "*"));
+```
+
+As shown in above example the `.padStart()` method is ta add padding at the start of the string. This method accepts two arguments first one is the minimum length of that we want our string to have and second argument is the charactor which will be added as padding for remaining places.
+
+Now in above example length of firstString is less than 10 and we have used padStart() method so padding will be added at the start of the string and it will add \* to make the overall string length of 10 charactor. While the length of secondString is already more than 10 so no padding will be added. The ouerall output of above code will be
+
+```
+*****Hello
+This string is more than 10 character long
+```
+
+Just like padStart() we have padEnd() as well which works similar to that of padStart the only difference is it will add padding at the end of the string instead of starting.
+
+```javascript
+const firstString = "Hello";
+const secondString = "This string is more than 10 character long";
+
+console.log(firstString.padEnd(10, "*"));
+console.log(secondString.padEnd(10, "*"));
+```
+
+The output now will be
+
+```
+Hello*****
+This string is more than 10 character long
+```
+
+If we want to repeat same string specific number of times then we can use repeat() method as below.
+
+```javascript
+const alert = "ALERT..!!⚠️";
+
+console.log(alert.repeat(10));
+```
+
+This will print 'ALERT..!!⚠️' ten times on the console.
