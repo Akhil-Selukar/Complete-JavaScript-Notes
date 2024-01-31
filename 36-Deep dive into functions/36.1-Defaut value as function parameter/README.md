@@ -1,4 +1,4 @@
-## 36 Deep dive into functions
+## 36.1 Deep dive into functions
 
 In this section we will take a closer look at the functions and will understand how exactly functions in javascript works and what all things we can do with functions. One of the most common feature of functions which was introduce in ES6 is, setting default parameters to the functions.
 
