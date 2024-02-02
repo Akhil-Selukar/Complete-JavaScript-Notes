@@ -157,6 +157,8 @@ console.log(movieScreen2.bookedSeats);
 
 Here in above example we extracted the method from movieScreen1 object and stored it in a variable called bookSeat `const bookSeat = movieScreen1.bookSeat;` (this works because of first class function.) Then we used call method on this to book a seat by passing the object of screen in which we want to do booking. `bookSeat.call(movieScreen1, 32, "Sheldon");` here bookSeat method will be called on object `movieScreen1` with arguments `32` and `Sheldon`. Similarly when we write `bookSeat.call(movieScreen2, 55, "Leonard");` the bookSear method will be called on movieScreen2 object with arguments `55` and `Leonard`. Now we can add as many screens as we want and call the same bookSeat method to book seat for that screen.
 
+> Here basically we are setting the `this` keyword for the method call with the first argument of call() method.
+
 The output of above code will be.
 
 ```
