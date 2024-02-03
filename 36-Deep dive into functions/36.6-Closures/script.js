@@ -6,8 +6,7 @@ const bookScreen1 = function () {
   return function () {
     numberOfBookings++;
     console.log(
-      `Booked a seat for movie. Total 
-      bookings are ${numberOfBookings}`
+      `Booked a seat for movie. Total bookings are ${numberOfBookings}`
     );
   };
 };
@@ -16,3 +15,5 @@ const bookSeat = bookScreen1();
 bookSeat();
 bookSeat();
 bookSeat();
+
+console.dir(bookSeat);
