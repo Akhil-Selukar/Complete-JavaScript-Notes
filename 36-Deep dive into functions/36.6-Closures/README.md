@@ -35,7 +35,7 @@ The function bookScreen1() is returning another function. So after execution of 
 
 ![Execution flow - 3 (36-Deep dive into functions/36.6-Closures/images/Code_Execution_3.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/36-Deep%20dive%20into%20functions/36.6-Closures/images/Code_Execution_3.png)
 
-Now the `bookSeat()` is available in global execution context and execution context for bookScreen1() is not present in the call stack. So when we call bookSeat() function at last, it will be executed in the global execution context. So it will execute the returned function code which is as below.
+Now the `bookSeat()` is available in global execution context and execution context for bookScreen1() is not present in the call stack. So when we call bookSeat() function at last, it will create it's execution contexxt which will be child of global execution context and as the function code is as below no variable will be there in the exxecution context of bookSeat().
 
 ```javascript
 function () {
@@ -46,7 +46,9 @@ function () {
   };
 ```
 
-Here at first step only it is incrementing the value of `numberOfBookings` variable. But this variable is not present in global execution context, it was there in execution context of bookScreen1() function which is not available now. And even as per scope chaining global exeution context is parent and hence it can't access variable of it's child. But if we see the result of above code after execution of `bookSeat()` three times. The `numberOfBookings` variable get's incremented.
+![Execution flow - 4 (36-Deep dive into functions/36.6-Closures/images/Code_Execution_4.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/36-Deep%20dive%20into%20functions/36.6-Closures/images/Code_Execution_4.png)
+
+Here in above code first step only it is incrementing the value of `numberOfBookings` variable. But this variable is not present in global or bookSeat()'s execution context, it was there in execution context of bookScreen1() function which is not available now. And as the execution context for `bookSeat()` is child of global execution context it will not have access to variables in execution context of `bookScreen1()` as per scope chaining. But if we see the result of above code after execution of `bookSeat()` three times. The `numberOfBookings` variable get's incremented.
 
 ```
 Booked a seat for movie. Total bookings are 1
@@ -54,6 +56,6 @@ Booked a seat for movie. Total bookings are 2
 Booked a seat for movie. Total bookings are 3
 ```
 
-![Execution flow - 4 (36-Deep dive into functions/36.6-Closures/images/Code_Execution_4.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/36-Deep%20dive%20into%20functions/36.6-Closures/images/Code_Execution_4.png)
+![Execution flow - 5 (36-Deep dive into functions/36.6-Closures/images/Code_Execution_5.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/36-Deep%20dive%20into%20functions/36.6-Closures/images/Code_Execution_5.png)
 
 This is what exactly first line in this article mean, the variable `numberOfBookings` was remembered even after the execution context for bookScreen1() in which that variable is present was removed from call stack. This is what exactly happpens because of closure.
