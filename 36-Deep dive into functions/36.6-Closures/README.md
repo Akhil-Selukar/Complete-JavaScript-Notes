@@ -102,3 +102,79 @@ If we see the output here.
 ![Closure output (36-Deep dive into functions/36.6-Closures/images/Output_1.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/36-Deep%20dive%20into%20functions/36.6-Closures/images/Output_1.png)
 
 Here in 'Scope' we can see the 'Closure' at 0th index. The closure is from 'bookScreen1' and has a variable'numberOfBookings' with value 3.
+
+### More on closures
+
+It is not compulsory to return a function to see closure in action. Consider below example.
+
+```javascript
+"use strict";
+
+let multiplicate;
+
+const getHundreds = function () {
+  const multiplier = 100;
+  multiplicate = function (num) {
+    console.log(num * multiplier);
+  };
+};
+
+const getThousands = function () {
+  const multiplier = 1000;
+  multiplicate = function (num) {
+    console.log(num * multiplier);
+  };
+};
+
+getHundreds();
+multiplicate(2);
+
+getThousands();
+multiplicate(2);
+```
+
+Here if we see the output we will get
+
+```
+200
+2000
+```
+
+So here when we first call `getHundreds()` function the value to `multiplier` is set to 100 and `multiplicate` is set to the function so when we call `multiplicate(2)` for the first time it was having closure values of getHundreds() hence we got 200 as a result. After that when we call `getThousands()` method now the multiplier is set to 1000 and `multiplicate` is <u>reassigned with new function</u> hence now the multiplicate will have closure of `getThousands()` so when we call `multiplicate(2)` second time we got 2000.
+
+Consider another example where we are trying to imitate a food ordering system where on ordering the food we receive confirmation from restaurent after 5 seconds.
+
+```javascript
+"use strict";
+
+const orderFood = function (dish) {
+  const dishName = dish;
+
+  setTimeout(function () {
+    console.log(
+      `your order for ${dishName} was accepted and food is being prepared.`
+    );
+  }, 5000);
+
+  console.log(
+    `Thanks for ordering ${dishName}, we are checking with the chief.`
+  );
+};
+
+orderFood("Pizza");
+```
+
+Here in above example we have a function called `orderFood` which accepts the dish name and it wait for 5 seconds (setTimeout(_function to execute_, _wait time in millSec_ )) and then print the message that order is accepted with dish name. Also after this setTimeout() funnction we have printed another message with dish name. Let's see the output for this.
+
+(Please run on your system to check the 5 sec delay)
+
+```
+Thanks for ordering Pizza, we are checking with the chief.
+your order for Pizza was accepted and food is being prepared.
+```
+
+So from the output we can see that when we call the orderFood() function, line `` console.log(
+    `Thanks for ordering ${dishName}, we are checking with the chief.`
+  ); `` got executed first and wtill line inside setTimeout function is not executed. So we can definitely say thet the execution context of orerFood gets removed after printing the thank you line and in it we are printing 'Pizza' means the variable `dishName` was accessable at that time. Now after 5 seconds when the setTimeout() executes at that time the executation context for orderFood was already removed from call stack still we successfully get dishName in the line `` console.log(
+      `your order for ${dishName} was accepted and food is being prepared.`
+    ); `` this shows that the closure was there and it had the value of dishName.
