@@ -232,3 +232,52 @@ Stuart-Priya-Missy-Leslie-Zack
 ```
 
 Here we can see that all the elements of otherCases array are joined using '-' and a single string is returned.
+
+### at method of array
+
+In ES2022 a new very simple array method is added which is 'at' metod. The 'at' method is just another way to access array element at given index just like `arr[_index_]`
+
+```javascript
+const colors = ["Red", "Green", "Blue", "Orange", "White"];
+
+console.log(colors[0]);
+console.log(colors.at(0));
+```
+
+Here we will get the color at index 0 as output for both console.log().
+
+One advantage of having 'at' method is when we want to get the last element of an array then in that case traditionally we used `arr.length - 1` as an index value. But as 'at' is a method and it accepts negative index we can pass negative index to get values from the end of an array.
+
+```javascript
+const colors = ["Red", "Green", "Blue", "Orange", "White"];
+
+console.log(colors.at(-1));
+console.log(colors.at(-2));
+```
+
+Here the output will be.
+
+```
+White
+Orange
+```
+
+So when we pass -1 index, it gives us the last value of that array. And when we pass -2 as index then it gives the second last value and so on. So here we dont have to get the length of the array and then subtract 1 from it to get the last and index and then read the value at that index. This is one of the advantages of using 'at' method. Also 'at' method supports method chaining.
+
+> Just like index based access, 'at' method also work on string.
+
+```javascript
+const firstName = "Sheldon";
+
+console.log(firstName.at(1));
+console.log(firstName.at(-1));
+```
+
+The output of above code will be
+
+```
+h
+n
+```
+
+'h' is the charactor at index 1 of the string and 'n' is the last charactor of the string hence index -1 give 'n'.
