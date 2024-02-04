@@ -372,3 +372,58 @@ color 7 in rainbow is Red.
 ```
 
 > Now the important question is when to use `for of` and when to use `forEach`. To answer this we must note that <u>'forEach' loop dont allow break and continue statements.</u> Hence if there is a requirement to do breaking or skipping some iteration then we should not use forEach loop.
+
+> NOTE : ForEach loop can be used with map and set as well.
+
+Below is a small example to demonstrate that forEach can also work with map and set data structure.
+
+```javascript
+const rainbowMap = new Map([
+  ["color1", "Violet"],
+  ["color2", "Indigo"],
+  ["color3", "Blue"],
+  ["color4", "Green"],
+  ["color5", "Yellow"],
+  ["color6", "Orange"],
+  ["color7", "Red"],
+]);
+
+rainbowMap.forEach(function (value, key, map) {
+  console.log(`Key is : ${key} and value is : ${value}`);
+});
+```
+
+The output of above code will be.
+
+```
+Key is : color1 and value is : Violet
+Key is : color2 and value is : Indigo
+Key is : color3 and value is : Blue
+Key is : color4 and value is : Green
+Key is : color5 and value is : Yellow
+Key is : color6 and value is : Orange
+Key is : color7 and value is : Red
+```
+
+Here we can see that for every iteration we properly got value, key and complete map.
+
+Now lets see the forEach with set.
+
+```javascript
+const colorSet = new Set(["Red", "Blue", "Green", "Red", "Black", "Red"]);
+
+colorSet.forEach(function (value, key, map) {
+  console.log(`Key is : ${key} and value is : ${value}`);
+});
+```
+
+The code above has a set of colors hence the repeated color will not be there in the set (as set doesnot allow duplicates). Now we know that set does not have any key nor they are index based so what well be there in the key for set. Let's see the output for above code.
+
+```
+Key is : Red and value is : Red
+Key is : Blue and value is : Blue
+Key is : Green and value is : Green
+Key is : Black and value is : Black
+```
+
+From above output we can see that key and value both contain the same thing i.e. value in case of sets. So in case of set while using forEach loop key could have been removed, but to make the forEach loop consistant throughout the language it is kept there.

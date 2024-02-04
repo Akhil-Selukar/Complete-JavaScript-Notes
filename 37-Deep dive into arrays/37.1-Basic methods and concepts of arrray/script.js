@@ -75,3 +75,25 @@ const rainbow = [
 rainbow.forEach(function (color, index) {
   console.log(`color ${index + 1} in rainbow is ${color}.`);
 });
+
+// Map and set with forEach
+
+const rainbowMap = new Map([
+  ["color1", "Violet"],
+  ["color2", "Indigo"],
+  ["color3", "Blue"],
+  ["color4", "Green"],
+  ["color5", "Yellow"],
+  ["color6", "Orange"],
+  ["color7", "Red"],
+]);
+
+rainbowMap.forEach(function (value, key, map) {
+  console.log(`Key is : ${key} and value is : ${value}`);
+});
+
+const colorSet = new Set(["Red", "Blue", "Green", "Red", "Black", "Red"]);
+
+colorSet.forEach(function (value, key, map) {
+  console.log(`Key is : ${key} and value is : ${value}`);
+});
