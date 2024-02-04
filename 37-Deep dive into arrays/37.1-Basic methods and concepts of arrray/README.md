@@ -2,6 +2,8 @@
 
 Arrays are special type of objects in javascript where the key value is always numeric (index). We can store multiple values with multiple datatypes in a single array and access the values based on index. Below are some of the commonly used arrray methods and concepts.
 
+### slice method
+
 Consider below code example.
 
 ```javascript
@@ -51,6 +53,8 @@ Line `console.log(friends.slice(-3));` specifies negative index. As only one ind
 Line `console.log(friends.slice());` does not specify any index so this will start from first element and go till last element. Means this will return the exact same array. This syntax is used to create a shallow copy of array. Same thing can be done by using [spread operator](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/24-Spread%20operator) as `console.log([...friends]);`. The only difference is when we use slice method we can do method chaining.
 
 > The one thing we have to note here is that the slice method does not change the actual array. It returns a completly new array.
+
+### splice method
 
 The next method which sound similar to slice is `.splice()` method. Splie method also accept two arguments. The first argument is the starting index and the second argument in splice is not the end index, but it is the number of elements to pick from starting index. Another thing to note in splice is that it actually mutate the original array which means it change the original array. Consider below example.
 
@@ -158,3 +162,73 @@ Now the output in above case will be.
 Here it started from 4th index from last and took 2 values those are 'Amy' and 'Howard' and rest of the values are still in original friends array.
 
 This is many time used to delete some element form an array.
+
+### reverse method
+
+Reverse method, as name suggest reverse the array and it is important to note that id does mutate/change the original array.
+
+```javascript
+const otherCasts = ["Stuart", "Priya", "Missy", "Leslie", "Zack"];
+
+console.log(otherCasts.reverse());
+console.log(otherCasts);
+```
+
+The output of above code will be.
+
+```
+['Zack', 'Leslie', 'Missy', 'Priya', 'Stuart']
+['Zack', 'Leslie', 'Missy', 'Priya', 'Stuart']
+```
+
+From tthe output we can clearly see that the reverse method indeed reversed the array and it did the changes in original array.
+
+### concat methods
+
+Concat method is used to join two arrays and create a new array with all the elements from both the arrays. Concat method doesnot mutate any of the array, it simply returns new array.
+
+```javascript
+"use strict";
+
+const friends = [
+  "Sheldon",
+  "Leonard",
+  "Penny",
+  "Amy",
+  "Howard",
+  "Bernadette",
+  "Raj",
+];
+const otherCasts = ["Stuart", "Priya", "Missy", "Leslie", "Zack"];
+
+const allCasts = friends.concat(otherCasts);
+console.log(allCasts);
+console.log([...friends, ...otherCasts]);
+```
+
+The output of above code will be
+
+```
+['Sheldon', 'Leonard', 'Penny', 'Amy', 'Howard', 'Bernadette', 'Raj', 'Stuart', 'Priya', 'Missy', 'Leslie', 'Zack']
+['Sheldon', 'Leonard', 'Penny', 'Amy', 'Howard', 'Bernadette', 'Raj', 'Stuart', 'Priya', 'Missy', 'Leslie', 'Zack']
+```
+
+From above example we can see that just like concat we can get the same result by using spread operator as well.
+
+### join method
+
+Join method is used to convert an array into a string with given separator and all the elements of array.
+
+```javascript
+const otherCasts = ["Stuart", "Priya", "Missy", "Leslie", "Zack"];
+
+console.log(otherCasts.join("-"));
+```
+
+The output of above code will be.
+
+```
+Stuart-Priya-Missy-Leslie-Zack
+```
+
+Here we can see that all the elements of otherCases array are joined using '-' and a single string is returned.
