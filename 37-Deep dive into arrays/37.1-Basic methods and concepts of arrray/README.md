@@ -49,3 +49,112 @@ Line `console.log(friends.slice(2, 5));` will start from 2nd index and will go t
 Line `console.log(friends.slice(-3));` specifies negative index. As only one index is present so it has to be the starting index. Now negative index means start counting from last and as starting index is included so it will start from 3rd last index and will go till end of the array hence we got last three values `['Howard', 'Bernadette', 'Raj']`.
 
 Line `console.log(friends.slice());` does not specify any index so this will start from first element and go till last element. Means this will return the exact same array. This syntax is used to create a shallow copy of array. Same thing can be done by using [spread operator](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/24-Spread%20operator) as `console.log([...friends]);`. The only difference is when we use slice method we can do method chaining.
+
+> The one thing we have to note here is that the slice method does not change the actual array. It returns a completly new array.
+
+The next method which sound similar to slice is `.splice()` method. Splie method also accept two arguments. The first argument is the starting index and the second argument in splice is not the end index, but it is the number of elements to pick from starting index. Another thing to note in splice is that it actually mutate the original array which means it change the original array. Consider below example.
+
+```javascript
+"use strict";
+
+const friends = [
+  "Sheldon",
+  "Leonard",
+  "Penny",
+  "Amy",
+  "Howard",
+  "Bernadette",
+  "Raj",
+];
+
+console.log(friends.splice(2));
+console.log(friends);
+```
+
+The output of above code will be
+
+```
+['Penny', 'Amy', 'Howard', 'Bernadette', 'Raj']
+['Sheldon', 'Leonard']
+```
+
+From above output we can see that the when we dont specify the second argument in splice() method then it takes all the values after the starting point hence we got `['Penny', 'Amy', 'Howard', 'Bernadette', 'Raj']` as output for `console.log(friends.splice(2));`. After eecuting the above splice method if we have a look at friends array then we can see that now the friends array only has two values. `['Sheldon', 'Leonard']`.
+
+To check the splice method with two arguments have a look at below example.
+
+```javascript
+"use strict";
+
+const friends = [
+  "Sheldon",
+  "Leonard",
+  "Penny",
+  "Amy",
+  "Howard",
+  "Bernadette",
+  "Raj",
+];
+
+console.log(friends.splice(2, 3));
+console.log(friends);
+```
+
+Now in above example at `console.log(friends.splice(2, 3));` we have specified starting index as 2 and the second argument is 3 which means it will take 3 values from the starting index. So the output of above line will be `['Penny', 'Amy', 'Howard']`. Here it started from the 2nd index i.e. 'Penny' and then took next three values (Penny, Amy and Howard). After executing this line all the remaining values will be there in the original friends array. Hence the friends array will now be `['Sheldon', 'Leonard', 'Bernadette', 'Raj']`
+
+Just like slice method we can specify negative index as well in the splice method. In this case it will count the index from last element of an array and take all the values (if second argument is not there)
+
+```javascript
+"use strict";
+
+const friends = [
+  "Sheldon",
+  "Leonard",
+  "Penny",
+  "Amy",
+  "Howard",
+  "Bernadette",
+  "Raj",
+];
+
+console.log(friends.splice(-4));
+console.log(friends);
+```
+
+Here the output will be
+
+```
+['Amy', 'Howard', 'Bernadette', 'Raj']
+['Sheldon', 'Leonard', 'Penny']
+```
+
+As the fourth element from last is 'Amy' hence we got elements form 'Amy' till end of the array. And the elements remain in the original friends array are `['Sheldon', 'Leonard', 'Penny']`
+
+If we give second argument with negative index value then it will take only that many values. Have a look at below example.
+
+```javascript
+"use strict";
+
+const friends = [
+  "Sheldon",
+  "Leonard",
+  "Penny",
+  "Amy",
+  "Howard",
+  "Bernadette",
+  "Raj",
+];
+
+console.log(friends.splice(-4, 2));
+console.log(friends);
+```
+
+Now the output in above case will be.
+
+```
+['Amy', 'Howard']
+['Sheldon', 'Leonard', 'Penny', 'Bernadette', 'Raj']
+```
+
+Here it started from 4th index from last and took 2 values those are 'Amy' and 'Howard' and rest of the values are still in original friends array.
+
+This is many time used to delete some element form an array.
