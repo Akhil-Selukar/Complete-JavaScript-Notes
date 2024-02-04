@@ -52,3 +52,26 @@ console.log(colors.at(-2));
 const firstName = "Sheldon";
 
 console.log(firstName.at(1));
+
+// ForEach loop.
+const rainbow = [
+  "Violet",
+  "Indigo",
+  "Blue",
+  "Green",
+  "Yellow",
+  "Orange",
+  "Red",
+];
+
+// for (const color of rainbow) {
+//   console.log(`Rainbow has ${color} color.`);
+// }
+
+// rainbow.forEach(function (color) {
+//   console.log(`Rainbow has ${color} color.`);
+// });
+
+rainbow.forEach(function (color, index) {
+  console.log(`color ${index + 1} in rainbow is ${color}.`);
+});

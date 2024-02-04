@@ -281,3 +281,94 @@ n
 ```
 
 'h' is the charactor at index 1 of the string and 'n' is the last charactor of the string hence index -1 give 'n'.
+
+### Looping using for-each
+
+We have already seen '[for of loop](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/18-For%20loop)' to loop over an array. But there is another way to do the same thing and that is 'forEach' loop. Have a look at below example to see how forEach loop is used.
+
+```javascript
+const rainbow = [
+  "Violet",
+  "Indigo",
+  "Blue",
+  "Green",
+  "Yellow",
+  "Orange",
+  "Red",
+];
+
+for (const color of rainbow) {
+  console.log(`Rainbow has ${color} color.`);
+}
+```
+
+In above example we have simply used the for of loop which we know, and printed all the colors of rainbow. If we want to do the same thing using forEach loop then it will be like below.
+
+```javascript
+const rainbow = [
+  "Violet",
+  "Indigo",
+  "Blue",
+  "Green",
+  "Yellow",
+  "Orange",
+  "Red",
+];
+
+rainbow.forEach(function (color) {
+  console.log(`Rainbow has ${color} color.`);
+});
+```
+
+Here we can see that we can directly apply forEach on the array. ForEach requires a callback function which will be executed for each of the element in an array. So forEach is a higher order function which accepts a function as a parameter. In above code example the callback function will be called for each of the element in rainbow array. So the output of above code will be.
+
+```
+Rainbow has Violet color.
+Rainbow has Blue color.
+Rainbow has Indigo color.
+Rainbow has Green color.
+Rainbow has Yellow color.
+Rainbow has Orange color.
+Rainbow has Red color.
+```
+
+There is a problem in above code, we don't have access to the counter, this counter we can access in for of loop by using array.entries() method like `for (const [index, value] of rainbow.entries())`. So get access to the index of the element in forEach loop we need to understand what all values for each gives while iterating over an array. For example in above code we have passed the color into the callback function which was given by the forEach, that means forEach gives elements in the array one by one. But apart from this for each gives two more things index value and the complete array. So we can pass these 3 things in the callback function in the order of element of current iteration as first parameter, index of current iteration as second parameter and complete array as third parameter. So the callback function in forEach can look like below.
+
+```javascript
+arr.forEach(function(element, index, array){
+  ...............
+  ...............
+})
+```
+
+Hence to get access to index in the rainbow code we can do.
+
+```javascript
+const rainbow = [
+  "Violet",
+  "Indigo",
+  "Blue",
+  "Green",
+  "Yellow",
+  "Orange",
+  "Red",
+];
+
+rainbow.forEach(function (color, index) {
+  console.log(`color ${index + 1} in rainbow is ${color}.`);
+});
+```
+
+As index starts from 0, we have added 1 to make it start from 1. So the output now will be.
+
+```
+color 1 in rainbow is Violet.
+color 3 in rainbow is Blue.
+color 2 in rainbow is Indigo.
+color 4 in rainbow is Green.
+color 5 in rainbow is Yellow.
+color 6 in rainbow is Orange.
+color 7 in rainbow is Red.
+```
+
+> Now the important question is when to use `for of` and when to use `forEach`. To answer this we must note that <u>'forEach' loop dont allow break and continue statements.</u> Hence if there is a requirement to do breaking or skipping some iteration then we should not use forEach loop.
