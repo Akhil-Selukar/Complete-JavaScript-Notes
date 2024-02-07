@@ -63,3 +63,23 @@ const currencies = new Map([
 ]);
 
 const transactions = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const displayTransactions = function (transactions) {
+  containerTransactions.innerHTML = "";
+
+  transactions.forEach((transactionAmount, i) => {
+    const transactionType = transactionAmount > 0 ? "deposit" : "withdrawal";
+    const html = `
+    <div class="transaction__row">
+      <div class="transaction__type transaction__type--${transactionType}">
+        ${i + 1} ${transactionType}
+      </div>
+      <div class="transaction__value">${transactionAmount}</div>
+    </div>
+    `;
+
+    containerTransactions.insertAdjacentHTML(`afterbegin`, html);
+  });
+};
+
+displayTransactions(account1.transactions);
