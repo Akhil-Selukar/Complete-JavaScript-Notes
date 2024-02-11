@@ -4,4 +4,41 @@
 
 **Working -** To understand the working of this application have a look at below flowchart.
 
-![Application flowchart(38-Banking application (Array practice)/images/JSBank-flowchart.png)](<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/38-Banking%20application%20(Array%20practice)/images/JSBank-flowchart.png>)
+![Application flowchart(38-Banking application (Array practice)/images/Flowchart.png)](<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/38-Banking%20application%20(Array%20practice)/images/Flowchart.png>)
+
+Flow 1 - When user enter login details, it will check for correct credentials. If credentials are correct then UI will be displayed. UI will have brlow componants.
+
+- Transactions history
+- Total balance
+- Deposit amount option
+- Transfer amount option
+- A logout timer
+
+Flow 2 - Feature to sort the transactions. If the transactions are already sorted then it will display them and if not then transactions will be sorted.
+
+Flow 3 - Transfer money feature. this will accept the amount to transfer and the account to which it should be transfered. It will add a withdrawl transaction of given amount to source account and a deposit transaction to target account and adjust the total amount in both the accounts accordingly.
+
+Flow 4 - Deposit money, This will add a deposit transaction of given amount to the current account and calculate the total balance accordingly.
+
+Flow 5 - Close account feature. This will ask for the credentials and if the correct credentials are given then the account data will be deleted.
+
+Flow 6 - If the logout timer is expired then the account will be logged out.
+
+### Code, logic and hints
+
+In script.js if we see we have four objects (account1, account2, account3 and account4) each account have owners name, transactions history, interest rate in % and password for the account. Then we have an array of accounts (This array will have only active account, if we close any account then it will be removed from the array.) Then we have used querySelector and by using class selectors we have selected all the html elements from the DOM.
+
+**displayTransactions function** -
+This function accepts the transactions array and create a html string in below format for each ttransaction.
+
+```html
+<div class="transaction__row">
+  <div class="transaction__type transaction__type--${transactionType}">
+    1 Withdrawl
+  </div>
+  <div class="transaction__value">-500</div>
+</div>
+```
+
+To do this it iterats over all the transactions and after creating above string, it add the string to the HTML using DOM manipulation at line `` containerTransactions.insertAdjacentHTML(`afterbegin`, html);
+  }); `` here afterbegin instructs that the after each iteration the new html string need to be added on top of the previous one.

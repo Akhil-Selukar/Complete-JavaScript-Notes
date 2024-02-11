@@ -4,28 +4,28 @@ const account1 = {
   owner: "Sheldon cooper",
   transactions: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
-  pin: 1111,
+  passwd: 1111,
 };
 
 const account2 = {
   owner: "Penny",
   transactions: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
-  pin: 2222,
+  passwd: 2222,
 };
 
 const account3 = {
   owner: "Leonard hofstadert",
   transactions: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
-  pin: 3333,
+  passwd: 3333,
 };
 
 const account4 = {
   owner: "Howard wolowitz",
   transactions: [430, 1000, 700, 50, 90],
   interestRate: 1,
-  pin: 4444,
+  passwd: 4444,
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -49,12 +49,12 @@ const btnClose = document.querySelector(".form__btn--close");
 const btnSort = document.querySelector(".btn--sort");
 
 const inputLoginUsername = document.querySelector(".login__input--user");
-const inputLoginPin = document.querySelector(".login__input--pin");
+const inputLoginpasswd = document.querySelector(".login__input--passwd");
 const inputTransferTo = document.querySelector(".form__input--to");
 const inputTransferAmount = document.querySelector(".form__input--amount");
 const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
-const inputClosePin = document.querySelector(".form__input--pin");
+const inputClosepasswd = document.querySelector(".form__input--passwd");
 
 const currencies = new Map([
   ["USD", "United States dollar"],
