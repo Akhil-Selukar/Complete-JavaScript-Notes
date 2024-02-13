@@ -8,7 +8,7 @@ const account1 = {
 };
 
 const account2 = {
-  owner: "Penny",
+  owner: "Penny unknown",
   transactions: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   passwd: 2222,
@@ -83,3 +83,16 @@ const displayTransactions = function (transactions) {
 };
 
 displayTransactions(account1.transactions);
+
+const addUserNames = function (accounts) {
+  accounts.forEach(function (account) {
+    account.userName = account.owner
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word[0])
+      .join("");
+  });
+};
+
+addUserNames(accounts);
+console.log(accounts);

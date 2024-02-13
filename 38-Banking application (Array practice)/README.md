@@ -42,3 +42,56 @@ This function accepts the transactions array and create a html string in below f
 
 To do this it iterats over all the transactions and after creating above string, it add the string to the HTML using DOM manipulation at line `` containerTransactions.insertAdjacentHTML(`afterbegin`, html);
   }); `` here afterbegin instructs that the after each iteration the new html string need to be added on top of the previous one.
+
+**To generate username for each account.** -
+We need a username for each account so that the account can be logged in. To create this username we will be using the initials of user's name in lower case. Now we have created below function to make the username and save it in respective object with property name 'userName'
+
+```javascript
+const addUserNames = function (accounts) {
+  accounts.forEach(function (account) {
+    account.userName = account.owner
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word[0])
+      .join("");
+  });
+};
+
+addUserNames(accounts);
+console.log(accounts);
+```
+
+In aabove function we are accepting the accounnts array, then we are looping over all accounts using forEach loop. Now for each account we are adding a new property called 'userName' and we are creating the value of this property using account owner's name. first we are using toLowerCase(), this will convert the owners name into lowercase string. Then we used split(" "), this will split the owners name by a space which will return us an array of two words. On that array we are using `.map((word) => word[0])` this will return us an array of first letter of each word inside the array returned bu split(). At last we are joining the two letters to form the userName. This username will be assigned as a property into respective object. So after executing above code the original objects will look like below.
+
+```
+[
+  {
+    owner: "Sheldon cooper",
+    transactions: [200, 450, -400, 3000, -650, -130, 70, 1300],
+    interestRate: 1.2,
+    passwd: 1111,
+    userName: sc,
+  },
+  {
+    owner: "Penny unknown",
+    transactions: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    interestRate: 1.5,
+    passwd: 2222,
+    userName: pu,
+  },
+  {
+    owner: "Leonard hofstadert",
+    transactions: [200, -200, 340, -300, -20, 50, 400, -460],
+    interestRate: 0.7,
+    passwd: 3333,
+    userName: lh,
+  },
+  {
+    owner: "Howard wolowitz",
+    transactions: [430, 1000, 700, 50, 90],
+    interestRate: 1,
+    passwd: 4444,
+    userName: hw,
+  }
+]
+```
