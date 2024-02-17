@@ -3,7 +3,7 @@
 const account1 = {
   owner: "Sheldon cooper",
   transactions: [200, 450, -400, 3000, -650, -130, 70, 1300],
-  interestRate: 1.2, // %
+  interestRate: 1.2,
   passwd: 1111,
 };
 
@@ -74,7 +74,7 @@ const displayTransactions = function (transactions) {
       <div class="transaction__type transaction__type--${transactionType}">
         ${i + 1} ${transactionType}
       </div>
-      <div class="transaction__value">${transactionAmount}</div>
+      <div class="transaction__value">${transactionAmount} €</div>
     </div>
     `;
 
@@ -97,10 +97,33 @@ const addUserNames = function (accounts) {
 addUserNames(accounts);
 console.log(accounts);
 
-const calcDisplayBalance = function (trans) {
-  const totalBalance = trans.reduce((acc, amt) => acc + amt, 0);
+const calcDisplayBalance = function (transactions) {
+  const totalBalance = transactions.reduce((acc, amt) => acc + amt, 0);
 
-  labelBalance.textContent = `${totalBalance} EUR`;
+  labelBalance.textContent = `${totalBalance} €`;
 };
 
 calcDisplayBalance(account1.transactions);
+
+const calculateSummary = function (transactions) {
+  const deposits = transactions
+    .filter((transactionAmt) => transactionAmt > 0)
+    .reduce((acc, amount) => acc + amount, 0);
+
+  labelSumIn.textContent = `${deposits} €`;
+
+  const withdrawl = transactions
+    .filter((transactionAmt) => transactionAmt < 0)
+    .reduce((acc, amount) => acc + amount, 0);
+
+  labelSumOut.textContent = `${Math.abs(withdrawl)} €`;
+
+  const interest = transactions
+    .filter((transactionAmount) => transactionAmount > 0)
+    .map((deposit) => (deposit * 1.2) / 100)
+    .reduce((acc, interest) => acc + interest, 0);
+
+  labelSumInterest.textContent = `${interest} €`;
+};
+
+calculateSummary(account1.transactions);

@@ -109,3 +109,35 @@ calcDisplayBalance(account1.transactions);
 ```
 
 In above function we are accepting the array of transactions as an input and we are using reduce method over that array. In reduce method we are adding each transaction amount into the accumulator which is initiated with initial value of 0. Hence at the end we will be having the total balance of account in totalBalance variable. By using `` labelBalance.textContent = `${totalBalance} EUR`; ``, we are setting the calculated total balance to the paragraph marked with class `balance__label` in the html document using DOM manipulation.
+
+**Calculation of total deposit, withdrawl and interest** -
+At the bottom of the application we are displaying the total amount deposited so far, total amount withdrawn so far and the total interest paid by the bank. The interest paid is calculated on every deposit. and the rate of interest for now in below example we have hardcoded to 1.2% but in actual final version rate of interest will be taken from the account object. Now have a look at below code.
+
+```javascript
+const calculateSummary = function (transactions) {
+  const deposits = transactions
+    .filter((transactionAmt) => transactionAmt > 0)
+    .reduce((acc, amount) => acc + amount, 0);
+
+  labelSumIn.textContent = `${deposits} €`;
+
+  const withdrawl = transactions
+    .filter((transactionAmt) => transactionAmt < 0)
+    .reduce((acc, amount) => acc + amount, 0);
+
+  labelSumOut.textContent = `${Math.abs(withdrawl)} €`;
+
+  const interest = transactions
+    .filter((transactionAmount) => transactionAmount > 0)
+    .map((deposit) => (deposit * 1.2) / 100)
+    .reduce((acc, interest) => acc + interest, 0);
+
+  labelSumInterest.textContent = `${interest} €`;
+};
+
+calculateSummary(account1.transactions);
+```
+
+Here we are accepting the array of transactions for an account and then at first calculating the total deposits, for this if the transaction amount is positive then it is a deposit hence using filter method we filtered out all the positive amount transactions and then we use reduce method (by method chaining) to calculate the sum of all the deposits made in the account. Then we assigned the calculated total to the 'Deposit' lable in html using DOM manipulation. Same is done for withdrawl by checking the negative transaction amount. To calculate the interest we have used the Map mathod and calculated 1.2% of each deposited value and then add all those interests using reduce method.
+
+> [!IMPORTANT] Important note here is, mathod chaining is good when we are not chaining too many methods and the array size is not huge, otherwse there will be significant performance impact. Also never use method chaining with the methods which mutates the original array.
