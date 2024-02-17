@@ -96,3 +96,11 @@ const addUserNames = function (accounts) {
 
 addUserNames(accounts);
 console.log(accounts);
+
+const calcDisplayBalance = function (trans) {
+  const totalBalance = trans.reduce((acc, amt) => acc + amt, 0);
+
+  labelBalance.textContent = `${totalBalance} EUR`;
+};
+
+calcDisplayBalance(account1.transactions);

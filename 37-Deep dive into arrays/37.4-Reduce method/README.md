@@ -32,3 +32,16 @@ Now during each iteration the when `return runs + total;` executes it will add r
 >
 > console.log(runsScored);
 > ```
+
+> [!TIP] Reduce method is not just return the addition, multiplicatio, subtraction, etc of all elements of the array. With little bit of logic we can use reduce method for many more scenarios like finding maximum value in an array or finding minimum value, etc. Below is the example where we are finding maximum value from an array.
+>
+> ```javascript
+> const runsThisOver = [0, 2, 4, 1, 6, 0];
+>
+> const maxValue = runsThisOver.reduce((max, runs) => {
+>   if (max > runs) return max;
+>   else return runs;
+> }, runsThisOver[0]);
+>
+> console.log(maxValue);
+> ```

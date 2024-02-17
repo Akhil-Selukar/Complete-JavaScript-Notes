@@ -95,3 +95,17 @@ In aabove function we are accepting the accounnts array, then we are looping ove
   }
 ]
 ```
+
+**To display the total balance of account** - To display total balance we need to calculate the sum of all the transactions done in the given account which can be done by using reduce method. We have below function for the same.
+
+```javascript
+const calcDisplayBalance = function (trans) {
+  const totalBalance = trans.reduce((acc, amt) => acc + amt, 0);
+
+  labelBalance.textContent = `${totalBalance} EUR`;
+};
+
+calcDisplayBalance(account1.transactions);
+```
+
+In above function we are accepting the array of transactions as an input and we are using reduce method over that array. In reduce method we are adding each transaction amount into the accumulator which is initiated with initial value of 0. Hence at the end we will be having the total balance of account in totalBalance variable. By using `` labelBalance.textContent = `${totalBalance} EUR`; ``, we are setting the calculated total balance to the paragraph marked with class `balance__label` in the html document using DOM manipulation.
