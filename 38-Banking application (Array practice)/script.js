@@ -97,10 +97,10 @@ const addUserNames = function (accounts) {
 addUserNames(accounts);
 console.log(accounts);
 
-const calcDisplayBalance = function (transactions) {
-  const totalBalance = transactions.reduce((acc, amt) => acc + amt, 0);
+const calcDisplayBalance = function (acc) {
+  acc.totalBalance = acc.transactions.reduce((acc, amt) => acc + amt, 0);
 
-  labelBalance.textContent = `${totalBalance} €`;
+  labelBalance.textContent = `${acc.totalBalance} €`;
 };
 
 // calcDisplayBalance(account1.transactions);
@@ -128,6 +128,17 @@ const calculateSummary = function (acc) {
 
 // calculateSummary(account1.transactions);
 
+function updateUI(account) {
+  // Display current balance
+  calcDisplayBalance(account);
+
+  // Display transactions
+  displayTransactions(account.transactions);
+
+  // Display account summary
+  calculateSummary(account);
+}
+
 // Login event handler
 let currentLoggedInAccount;
 
@@ -151,13 +162,38 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUsername.value = inputLoginpassword.value = "";
     inputLoginpassword.blur(); // to unselect the passowrd field after login
 
-    // Display current balance
-    calcDisplayBalance(currentLoggedInAccount.transactions);
+    // // Display current balance
+    // calcDisplayBalance(currentLoggedInAccount);
 
-    // Display transactions
-    displayTransactions(currentLoggedInAccount.transactions);
+    // // Display transactions
+    // displayTransactions(currentLoggedInAccount.transactions);
 
-    // Display account summary
-    calculateSummary(currentLoggedInAccount);
+    // // Display account summary
+    // calculateSummary(currentLoggedInAccount);
+
+    updateUI(currentLoggedInAccount);
   }
+});
+
+// Transfer money functionality
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+
+  const transferToAccount = accounts.find(
+    (acc) => acc.userName === inputTransferTo.value
+  );
+
+  if (
+    amount > 0 &&
+    currentLoggedInAccount.totalBalance >= amount &&
+    transferToAccount &&
+    transferToAccount?.userName !== currentLoggedInAccount.userName
+  ) {
+    transferToAccount.transactions.push(amount);
+    currentLoggedInAccount.transactions.push(-1 * amount);
+  }
+  inputTransferAmount.value = inputTransferTo.value = "";
+  inputTransferTo.blur();
+  updateUI(currentLoggedInAccount);
 });

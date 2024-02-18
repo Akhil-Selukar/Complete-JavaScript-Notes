@@ -209,3 +209,37 @@ btnLogin.addEventListener("click", function (e) {
 ```
 
 Also the `calculateSummary` method is modified to accept the complete the account as input because we wanted to read the interest rate also from the logged in account object.
+
+**Transfer functionality** - To transfer the money from logged in account to some other account we need to make sure below things.
+
+1. The target account must exist.
+2. The target account and source account must not be same.
+3. The amount to transfer must be greater than 0 and less that the total balance of source account.
+
+If all the above conditions are satisfied then the amount must be withdrawn from the source account and must be added to the target account. And once the transaction is done we have to refresh the UI so that the withdrawl transaction reflect to the screen. For all this operation we have written below function.
+
+```javascript
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+
+  const transferToAccount = accounts.find(
+    (acc) => acc.userName === inputTransferTo.value
+  );
+
+  if (
+    amount > 0 &&
+    currentLoggedInAccount.totalBalance >= amount &&
+    transferToAccount &&
+    transferToAccount?.userName !== currentLoggedInAccount.userName
+  ) {
+    transferToAccount.transactions.push(amount);
+    currentLoggedInAccount.transactions.push(-1 * amount);
+  }
+  inputTransferAmount.value = inputTransferTo.value = "";
+  inputTransferTo.blur();
+  updateUI(currentLoggedInAccount);
+});
+```
+
+In above example we have added a positive transaction to the receiving account and same amount of negative transaction to the sending or currentLoggedInAccount. Once the transaction is performed we are updating the UI by updateUI method.
