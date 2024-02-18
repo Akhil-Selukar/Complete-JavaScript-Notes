@@ -4,28 +4,28 @@ const account1 = {
   owner: "Sheldon cooper",
   transactions: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2,
-  passwd: 1111,
+  password: 1111,
 };
 
 const account2 = {
   owner: "Penny unknown",
   transactions: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
-  passwd: 2222,
+  password: 2222,
 };
 
 const account3 = {
   owner: "Leonard hofstadert",
   transactions: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
-  passwd: 3333,
+  password: 3333,
 };
 
 const account4 = {
   owner: "Howard wolowitz",
   transactions: [430, 1000, 700, 50, 90],
   interestRate: 1,
-  passwd: 4444,
+  password: 4444,
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -49,12 +49,12 @@ const btnClose = document.querySelector(".form__btn--close");
 const btnSort = document.querySelector(".btn--sort");
 
 const inputLoginUsername = document.querySelector(".login__input--user");
-const inputLoginpasswd = document.querySelector(".login__input--passwd");
+const inputLoginpassword = document.querySelector(".login__input--password");
 const inputTransferTo = document.querySelector(".form__input--to");
 const inputTransferAmount = document.querySelector(".form__input--amount");
 const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
-const inputClosepasswd = document.querySelector(".form__input--passwd");
+const inputClosepassword = document.querySelector(".form__input--password");
 
 const currencies = new Map([
   ["USD", "United States dollar"],
@@ -82,7 +82,7 @@ const displayTransactions = function (transactions) {
   });
 };
 
-displayTransactions(account1.transactions);
+// displayTransactions(account1.transactions);
 
 const addUserNames = function (accounts) {
   accounts.forEach(function (account) {
@@ -103,27 +103,61 @@ const calcDisplayBalance = function (transactions) {
   labelBalance.textContent = `${totalBalance} €`;
 };
 
-calcDisplayBalance(account1.transactions);
+// calcDisplayBalance(account1.transactions);
 
-const calculateSummary = function (transactions) {
-  const deposits = transactions
+const calculateSummary = function (acc) {
+  const deposits = acc.transactions
     .filter((transactionAmt) => transactionAmt > 0)
     .reduce((acc, amount) => acc + amount, 0);
 
   labelSumIn.textContent = `${deposits} €`;
 
-  const withdrawl = transactions
+  const withdrawl = acc.transactions
     .filter((transactionAmt) => transactionAmt < 0)
     .reduce((acc, amount) => acc + amount, 0);
 
   labelSumOut.textContent = `${Math.abs(withdrawl)} €`;
 
-  const interest = transactions
+  const interest = acc.transactions
     .filter((transactionAmount) => transactionAmount > 0)
-    .map((deposit) => (deposit * 1.2) / 100)
+    .map((deposit) => (deposit * acc.interestRate) / 100)
     .reduce((acc, interest) => acc + interest, 0);
 
   labelSumInterest.textContent = `${interest} €`;
 };
 
-calculateSummary(account1.transactions);
+// calculateSummary(account1.transactions);
+
+// Login event handler
+let currentLoggedInAccount;
+
+btnLogin.addEventListener("click", function (e) {
+  // Prevent form frmo refreshing the page
+  e.preventDefault();
+
+  currentLoggedInAccount = accounts.find(
+    (acc) => acc.userName === inputLoginUsername.value
+  );
+
+  if (currentLoggedInAccount?.password === Number(inputLoginpassword.value)) {
+    // display UI
+    labelWelcome.textContent = `Welcome ${
+      currentLoggedInAccount.owner.split(" ")[0]
+    }`;
+
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+    inputLoginUsername.value = inputLoginpassword.value = "";
+    inputLoginpassword.blur(); // to unselect the passowrd field after login
+
+    // Display current balance
+    calcDisplayBalance(currentLoggedInAccount.transactions);
+
+    // Display transactions
+    displayTransactions(currentLoggedInAccount.transactions);
+
+    // Display account summary
+    calculateSummary(currentLoggedInAccount);
+  }
+});

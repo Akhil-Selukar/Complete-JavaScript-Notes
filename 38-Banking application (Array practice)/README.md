@@ -141,3 +141,71 @@ calculateSummary(account1.transactions);
 Here we are accepting the array of transactions for an account and then at first calculating the total deposits, for this if the transaction amount is positive then it is a deposit hence using filter method we filtered out all the positive amount transactions and then we use reduce method (by method chaining) to calculate the sum of all the deposits made in the account. Then we assigned the calculated total to the 'Deposit' lable in html using DOM manipulation. Same is done for withdrawl by checking the negative transaction amount. To calculate the interest we have used the Map mathod and calculated 1.2% of each deposited value and then add all those interests using reduce method.
 
 > [!IMPORTANT] Important note here is, mathod chaining is good when we are not chaining too many methods and the array size is not huge, otherwse there will be significant performance impact. Also never use method chaining with the methods which mutates the original array.
+
+**Implementing login functionality** - Till now all the methods that we wrote are working on a specific hardcoded user. But we want these to work for specific logged in user. To implement this we need to implement login functionality first. So whenever user enter username and password to the provided section we have to validate it with the actual username and password. Now if we see the HTML the section to enter username and password is a form with a button to submit the changes. So we can use a event listener which will listen for the click event on the button and as soon as the event occurs it will read username and password and validate it against the stored values. The implementation for this part will look like below.
+
+```javascript
+let currentLoggedInAccount;
+
+btnLogin.addEventListener("click", function (e) {
+  // Prevent form frmo refreshing the page
+  e.preventDefault();
+
+  currentLoggedInAccount = accounts.find(
+    (acc) => acc.userName === inputLoginUsername.value
+  );
+
+  if (currentLoggedInAccount?.password === Number(inputLoginpassword.value)) {
+    labelWelcome.textContent = `Welcome ${
+      currentLoggedInAccount.owner.split(" ")[0]
+    }`;
+
+    containerApp.style.opacity = 100;
+  }
+});
+```
+
+Here we have added the event listener which is listening for the click event on the button and as soon as the event happens it is finding the userAccount with the username entered in userName field. UserName field entered in frontend is accessed by `inputLoginUsername.value` and we are using find method on an array which holds all active users. When the username is matched we are fetching that users accouont object and storing it into a variable called 'currentLoggedInAccount'. Now we got the account but we want to make sure that password entered is also correct hence we are validating the password stored in the object which we got earlier against the password entered in frontend field.
+
+Now there might be a chance that username is also incorrect in that case currentLoggedInAccount will be `udefined` and if we try to access password property from undefined then it will throw an error hence we are using [optional chaining](!https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/31-Optional%20chaining) here, so the password property will be accessed only if the currentLoggedInAccount has some value. We already know that the value which we get from frontend elements are always string hence we have converted it to number and then compared with the value stored in the object. Now if the password is also correct then we want to show the complete UI hence we are setting the 'opicity' property from css for app element which is the complete UI to 100 by using line `containerApp.style.opacity = 100;`. The remaining code is just to display the welcome message with users first name.
+
+> [!NOTE] by default the form refresh the page on submit and if that happens then all our properties set above will be reset hence we dont want to refresh the UI hence we have written `e.preventDefault();` by accessing the event object.
+
+Now here even though we are able to login now and able to see the UI but the content in UI i.e. transactions and total balance and summary is not changeing based on the account. This is because we are still calling the methods which we created earlier with hardcoded account transactions. To make it dynamic we have to call all the methods from the above callback function defined for event listener.
+
+```javascript
+let currentLoggedInAccount;
+
+btnLogin.addEventListener("click", function (e) {
+  // Prevent form frmo refreshing the page
+  e.preventDefault();
+
+  currentLoggedInAccount = accounts.find(
+    (acc) => acc.userName === inputLoginUsername.value
+  );
+
+  if (currentLoggedInAccount?.password === Number(inputLoginpassword.value)) {
+    // display UI
+    labelWelcome.textContent = `Welcome ${
+      currentLoggedInAccount.owner.split(" ")[0]
+    }`;
+
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+    inputLoginUsername.value = inputLoginpassword.value = "";
+    inputLoginpassword.blur(); // to unselect the passowrd field after login
+
+    // Display current balance
+    calcDisplayBalance(currentLoggedInAccount.transactions);
+
+    // Display transactions
+    displayTransactions(currentLoggedInAccount.transactions);
+
+    // Display account summary
+    calculateSummary(currentLoggedInAccount);
+  }
+});
+```
+
+Also the `calculateSummary` method is modified to accept the complete the account as input because we wanted to read the interest rate also from the logged in account object.
