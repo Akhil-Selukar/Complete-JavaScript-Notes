@@ -1,4 +1,4 @@
-## 37.4 Find method
+## 37.5 Find method
 
 Find method is use to find a specific element form an array based on given condition. Fid method works very similar to that of filtter method, the only difference is filter method returns an array of all the elements satisfying the given condition while find method returns the first element satisfying the given condition. Have a look at below example.
 
