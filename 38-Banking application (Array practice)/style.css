@@ -211,7 +211,7 @@ nav {
   background-image: linear-gradient(to top left, #ffb003, #ffcb03);
 }
 
-.operation--loan {
+.operation--deposit {
   background-image: linear-gradient(to top left, #39b385, #9be15d);
 }
 
@@ -234,10 +234,10 @@ h2 {
 }
 
 /* Exceptions for interst */
-.form.form--loan {
+.form.form--deposit {
   grid-template-columns: 2.5fr 1fr 2.5fr;
 }
-.form__label--loan {
+.form__label--deposit {
   grid-row: 2;
 }
 /* End exceptions */

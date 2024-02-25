@@ -243,3 +243,24 @@ btnTransfer.addEventListener("click", function (e) {
 ```
 
 In above example we have added a positive transaction to the receiving account and same amount of negative transaction to the sending or currentLoggedInAccount. Once the transaction is performed we are updating the UI by updateUI method.
+
+**Close account functionality** - In this functionality the current logged in user need to pass his/her username and password. If correct username and password is entered then the user will be logged out and his account will be deleted. If that user tries to login again then system will not allow that user to login again as the account is not present in the syste.<br>
+To implement this functionality we have added a event listener to closse account button i.e. `btnClose` as below.
+
+```javascript
+btnClose.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentLoggedInAccount.userName &&
+    Number(inputClosePassword.value) === currentLoggedInAccount.password
+  ) {
+    const accountIndex = accounts.findIndex(
+      (account) => account.userName === inputCloseUsername.value
+    );
+    accounts.splice(accountIndex, 1);
+    containerApp.style.opacity = 0;
+  }
+});
+```
+
+In above code we can see that the callback function is checking the username and password entered in the close account form are equal to the currentLoggedInUser's username and password. If the username and password matches then we are finding the index of the currently logged in account from accounts array. Once we got the index then as we know that the splice method mutate the original array hence we are using [splice method](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/37-Deep%20dive%20into%20arrays/37.1-Basic%20methods%20and%20concepts%20of%20arrray) to delete the account at the index from accounts array. `accounts.splice(accountIndex, 1);`. Now we also have to log the user out, to do that we are turning the opicity to '0' `containerApp.style.opacity = 0;`.

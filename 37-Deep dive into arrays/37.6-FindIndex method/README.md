@@ -22,3 +22,5 @@ The output of above code will be.
 ```
 
 The above output is because the 6 run is present at index 4 while 0 run is first present at index 0 itself.
+
+At first glance it looks very similar to indexOf() method, but there is a very big difference. In index of we can only search the value like `runsThisOver.indexOf(4)`, while in findIndex we can pass a callback function in which we can write any condition which will generate a boolean value (It is not necessary that we can pass only values) like `runsThisOver.findIndex((run) => run/2)`, Here run/2 is not actually a value which is present in the array but it is an condition based on which we can find the element in given array.

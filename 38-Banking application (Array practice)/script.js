@@ -44,7 +44,7 @@ const containerTransactions = document.querySelector(".transaction");
 
 const btnLogin = document.querySelector(".login__btn");
 const btnTransfer = document.querySelector(".form__btn--transfer");
-const btnLoan = document.querySelector(".form__btn--loan");
+const btnDeposit = document.querySelector(".form__btn--deposit");
 const btnClose = document.querySelector(".form__btn--close");
 const btnSort = document.querySelector(".btn--sort");
 
@@ -52,9 +52,11 @@ const inputLoginUsername = document.querySelector(".login__input--user");
 const inputLoginpassword = document.querySelector(".login__input--password");
 const inputTransferTo = document.querySelector(".form__input--to");
 const inputTransferAmount = document.querySelector(".form__input--amount");
-const inputLoanAmount = document.querySelector(".form__input--loan-amount");
+const inputDepositAmount = document.querySelector(
+  ".form__input--deposit-amount"
+);
 const inputCloseUsername = document.querySelector(".form__input--user");
-const inputClosepassword = document.querySelector(".form__input--password");
+const inputClosePassword = document.querySelector(".form__input--password");
 
 const currencies = new Map([
   ["USD", "United States dollar"],
@@ -196,4 +198,18 @@ btnTransfer.addEventListener("click", function (e) {
   inputTransferAmount.value = inputTransferTo.value = "";
   inputTransferTo.blur();
   updateUI(currentLoggedInAccount);
+});
+
+btnClose.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentLoggedInAccount.userName &&
+    Number(inputClosePassword.value) === currentLoggedInAccount.password
+  ) {
+    const accountIndex = accounts.findIndex(
+      (account) => account.userName === inputCloseUsername.value
+    );
+    accounts.splice(accountIndex, 1);
+    containerApp.style.opacity = 0;
+  }
 });
