@@ -66,10 +66,14 @@ const currencies = new Map([
 
 const transactions = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const displayTransactions = function (transactions) {
+const displayTransactions = function (transactions, sort = false) {
   containerTransactions.innerHTML = "";
 
-  transactions.forEach((transactionAmount, i) => {
+  const transn = sort
+    ? transactions.slice().sort((a, b) => a - b)
+    : transactions;
+
+  transn.forEach((transactionAmount, i) => {
     const transactionType = transactionAmount > 0 ? "deposit" : "withdrawal";
     const html = `
     <div class="transaction__row">
@@ -221,4 +225,11 @@ btnDeposit.addEventListener("click", function (e) {
   }
   updateUI(currentLoggedInAccount);
   inputDepositAmount.value = "";
+});
+
+let sortedFlag = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  displayTransactions(currentLoggedInAccount.transactions, !sortedFlag);
+  sortedFlag = !sortedFlag;
 });
