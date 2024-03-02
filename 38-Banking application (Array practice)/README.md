@@ -264,3 +264,16 @@ btnClose.addEventListener("click", function (e) {
 ```
 
 In above code we can see that the callback function is checking the username and password entered in the close account form are equal to the currentLoggedInUser's username and password. If the username and password matches then we are finding the index of the currently logged in account from accounts array. Once we got the index then as we know that the splice method mutate the original array hence we are using [splice method](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/37-Deep%20dive%20into%20arrays/37.1-Basic%20methods%20and%20concepts%20of%20arrray) to delete the account at the index from accounts array. `accounts.splice(accountIndex, 1);`. Now we also have to log the user out, to do that we are turning the opicity to '0' `containerApp.style.opacity = 0;`.
+
+**Deposit money functionality** - This is a very straigt forward functionality. Here as soon as the submit button for deposit is clicked we are reading the value entered in deposit box and checking if that amount value is greater than 200 or not is yes then we are simply adding a deposit transaction (positive value) to the transactions array of current logged in accouont and refreshing the UI.
+
+```javascript
+btnDeposit.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (Number(inputDepositAmount.value) > 200) {
+    currentLoggedInAccount.transactions.push(Number(inputDepositAmount.value));
+  }
+  updateUI(currentLoggedInAccount);
+  inputDepositAmount.value = "";
+});
+```

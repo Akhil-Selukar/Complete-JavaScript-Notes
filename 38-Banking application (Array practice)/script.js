@@ -213,3 +213,12 @@ btnClose.addEventListener("click", function (e) {
     containerApp.style.opacity = 0;
   }
 });
+
+btnDeposit.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (Number(inputDepositAmount.value) > 200) {
+    currentLoggedInAccount.transactions.push(Number(inputDepositAmount.value));
+  }
+  updateUI(currentLoggedInAccount);
+  inputDepositAmount.value = "";
+});
