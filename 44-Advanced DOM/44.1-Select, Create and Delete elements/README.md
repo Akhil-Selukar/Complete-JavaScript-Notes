@@ -113,3 +113,47 @@ console.log(allParagraphs);
 
 Above code will select all the p elements present in the html document. The main differece between querySelectorAll and getElementsByTagName is getElementsByTagName will return
 HTMLCollection while querySelectorAll returns the NodeList. The difference between two is HTMLCollection is a live collection which means if the dome changes in runtime then HTMLCollection will also change which is not the case with NodeList. NodeList will change only if the page is refreshed. Because of this difference we sometimes use HTMLCollection when some of our elements appear on top of the eisting page based on specific event and we want to add newly added element also in the selection.
+
+Now same live HTMLCollection we can obtain by using class name as well, for that we can use method .getElementsByClassName().
+
+```javascript
+const allBtn = document.getElementsByClassName("btn");
+console.log(allBtn);
+```
+
+<hr>
+
+Now apart from selecting elements from DOM we can add/create elements in DOM as well. For that we can use `insertAdjacentHTML()` which we already saw in [38-Banking application](<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/38-Banking%20application%20(Array%20practice)>). By using insertAdjacentHTML() we can add a complete html code string into another element. In this section we will see another way where we can create an element itself and place it in the DOM at specific place.
+
+Have a look at below code.
+
+```javascript
+const bodyElement = document.body;
+const cookieMsg = document.createElement("div");
+cookieMsg.classList.add("cookie-message");
+
+// cookieMsg.textContent = "We use cookie for better and faster performance and analytics purpose";
+
+cookieMsg.innerHTML =
+  "We use cookie for better and faster performance and analytics purpose <button class='btn'>got it!</button>";
+
+bodyElement.prepend(cookieMsg);
+```
+
+In above code at first line we have selected the body element as we want to add the new cookieMsg element in the body element. Then by using `document.createElement("div")` we have created a 'div' element and stored this element in the variable cookieMsg. Now this cookieMsg will work just like any other element selected by using querySelector or any other method. So we have added a class 'cookie-message' to the div element created. Then we can set the text using textContent or innerHTML, as we have an HTML element inside the text of div hence we are using innerHTML here to set the text. Now our element is ready but it is still not part of the html document as we have not added it to the page. To do that we can prepend the newly created element to the selected element (in our case body). Prepend means the element will be added as the first child for body i.e. the first element inside the body. Hence the output of above code will be, the newly created div with all assigned classes and inner html will be added to the html document and we will be able to see the div element with message on screen.
+
+Now if we add the same element at the end of body i.e. as last child for body. We can achieve this by using append() method like below.
+
+```javascript
+const bodyElement = document.body;
+const cookieMsg = document.createElement("div");
+cookieMsg.classList.add("cookie-message");
+
+cookieMsg.innerHTML =
+  "We use cookie for better and faster performance and analytics purpose <button class='btn'>got it!</button>";
+
+bodyElement.prepend(cookieMsg);
+bodyElement.append(cookieMsg);
+```
+
+Now here if we see, the cookieMsg element is added as first as well as the last child, so we might expect the element at both the places. But here we are prepending and appending the same element and same element can't be present at two different places at the same time in DOM. Hence it will only be appended and will be available at the last of body element as las child to body.

@@ -1,5 +1,5 @@
 body {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   align-items: center;
   background: #1c2120;
@@ -39,4 +39,15 @@ h4 {
   border-radius: 10rem;
   cursor: pointer;
   margin-right: 2.5rem;
+}
+
+.cookie-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  background-color: white;
+  color: #bbb;
+  font-size: 1.5rem;
+  font-weight: 400;
 }
