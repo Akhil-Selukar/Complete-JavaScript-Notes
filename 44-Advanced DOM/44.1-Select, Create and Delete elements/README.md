@@ -156,4 +156,85 @@ bodyElement.prepend(cookieMsg);
 bodyElement.append(cookieMsg);
 ```
 
-Now here if we see, the cookieMsg element is added as first as well as the last child, so we might expect the element at both the places. But here we are prepending and appending the same element and same element can't be present at two different places at the same time in DOM. Hence it will only be appended and will be available at the last of body element as las child to body.
+Now here if we see, the cookieMsg element is added as first as well as the last child, so we might expect the element at both the places. But here we are prepending and appending the same element and same element can't be present at two different places at the same time in DOM. Hence it will only be appended and will be available at the last of body element as last child to body element.
+
+_**Note:** As the same element can't be present in the DOM at two different places at same time hence we can use append and prepent to move elements as well._
+
+Now in case we want to add the element at both the places, in that case we have to clone the element before adding it to another place and that can be done by using 'cloneNode(true)' as below.
+
+```javascript
+const bodyElement = document.body;
+const cookieMsg = document.createElement("div");
+cookieMsg.classList.add("cookie-message");
+
+cookieMsg.innerHTML =
+  "We use cookie for better and faster performance and analytics purpose <button class='btn'>got it!</button>";
+
+bodyElement.prepend(cookieMsg);
+bodyElement.append(cookieMsg.cloneNode(true));
+```
+
+Now in above case before appending the element we are cloning the element and hence the cookieMsg will be appended as well as prepended and will be available at two different places in the webpage.
+
+Apart from prepend and append methods, we have before and after methods as well.
+
+```javascript
+const bodyElement = document.body;
+const cookieMsg = document.createElement("div");
+cookieMsg.classList.add("cookie-message");
+
+cookieMsg.innerHTML =
+  "We use cookie for better and faster performance and analytics purpose <button class='btn'>got it!</button>";
+
+bodyElement.before(cookieMsg);
+bodyElement.after(cookieMsg.cloneNode(true));
+```
+
+Here the cookieMsg will be added before the body element and another clone of cookieMsg will be added after the body element. Prepend and append creates first and last child respectively while before and after add the element adjacent
+to the calling element (body in above case).
+
+<hr>
+
+We saw selection of DOM elements then we saw creation and addition of new DOM element. Apart from this we can also remove the DOM elements as well. Have a look at below code.
+
+```javascript
+const bodyElement = document.body;
+const cookieMsg = document.createElement("div");
+cookieMsg.classList.add("cookie-message");
+
+cookieMsg.innerHTML =
+  "We use cookie for better and faster performance and analytics purpose <button class='btn cookie-close-btn'>got it!</button>";
+
+bodyElement.prepend(cookieMsg);
+bodyElement.append(cookieMsg);
+
+document
+  .querySelector(".cookie-close-btn")
+  .addEventListener("click", function () {
+    cookieMsg.remove();
+  });
+```
+
+In above example we have selected the button inside the cookieMsg and added an event listener to it which will listen for click event. As soon as the button is clicked we are removing the cookieMsg element from DOM by using .remove() method.
+
+.remove() method is added recently to the javascript. Before .remove() method what we used to do is to select parent element of the element to be removed and then remove the child element. Have a look at below code for better understanding.
+
+```javascript
+const bodyElement = document.body;
+const cookieMsg = document.createElement("div");
+cookieMsg.classList.add("cookie-message");
+
+cookieMsg.innerHTML =
+  "We use cookie for better and faster performance and analytics purpose <button class='btn cookie-close-btn'>got it!</button>";
+
+bodyElement.prepend(cookieMsg);
+bodyElement.append(cookieMsg);
+
+document
+  .querySelector(".cookie-close-btn")
+  .addEventListener("click", function () {
+    cookieMsg.parentElement.removeChild(cookieMsg);
+  });
+```
+
+In above example at line `cookieMsg.parentElement.removeChild(cookieMsg);` first we are selecting the parent element of cookieMsg which will be body element then we are removing a child from body element. And by passing the element i.e. cookieMsg we are specifying which exact child to remove.

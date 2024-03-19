@@ -24,7 +24,13 @@ cookieMsg.classList.add("cookie-message");
 // cookieMsg.textContent = "We use cookie for better and faster performance and analytics purpose";
 
 cookieMsg.innerHTML =
-  "We use cookie for better and faster performance and analytics purpose <button class='btn'>got it!</button>";
+  "We use cookie for better and faster performance and analytics purpose <button class='btn cookie-close-btn'>got it!</button>";
 
 bodyElement.prepend(cookieMsg);
 bodyElement.append(cookieMsg);
+
+document
+  .querySelector(".cookie-close-btn")
+  .addEventListener("click", function () {
+    cookieMsg.remove();
+  });
