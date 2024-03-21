@@ -1,3 +1,7 @@
+:root {
+  --color-primary: #5ec576;
+}
+
 body {
   height: 80vh;
   display: flex;
@@ -30,7 +34,7 @@ h4 {
 }
 
 .btn {
-  background-color: #5ec576;
+  background-color: var(--color-primary);
   display: inline-block;
   font-size: 1.6rem;
   font-weight: 500;

@@ -16,3 +16,5 @@ console.log(cookieMsg.style.backgroundColor);
 console.log(cookieMsg.style.width);
 
 console.log(getComputedStyle(cookieMsg).width);
+
+document.documentElement.style.setProperty("--color-primary", "#e6bf22");
