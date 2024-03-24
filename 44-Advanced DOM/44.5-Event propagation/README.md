@@ -241,4 +241,4 @@ Nav
 Links__Section
 ```
 
-Here we can see that the 'nav' element's eventListner got executed first which means events are now being handled in capture phase. This is useful in 'Event deligation' part of javascript.
+Here we can see that the 'nav' element's eventListner got executed first which means events are now being handled in capture phase. This is useful in 'Event deligation' in javascript.
