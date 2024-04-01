@@ -30,3 +30,15 @@ Inheritance is nothing but reusing the properties of parent by it's child. For e
 ### 4. Polymorphism:
 
 Polymorphism means a child can implement the inherited method is different way. That means multiple child classes can have different implementation of the inherited methods. For example if we consider the same example as that of the above one (user and admin), if we another type of user called superUser. Superuser has more access on the application than admin. Now admin and superUser both implements the login functionality which they inherited from the parent i.e. user. But for admin to login we only need username and password, but superUser need username, password plus OTP sent on the mobile number. In this case we can see that both admin and superuser had implemented the inherited method of authentication from parent, but both of them have their own way of doing the authentication. This is nothing but the polymorphism. Here the Authenticate/login method has two different implementation in two different child.
+
+## How OOP is implemented in Javascript
+
+In Javascript we don't have regular classes so that we can instantiate an object from that class. In javascrpit we have prototypes where objects are linked to the prototype object and this is called as prototypal inheritance or delegation. The object which is linked to the prototype can access methods in the prototype. So in other words behaviours/methods of prototype is delegated to the linked prototype object hence it is called as sdelegation as well.
+
+Now the questions are how can we create the prototypes? How can we link the objects to the prototypes? or how we can create objects in javascript.
+So in javascript we have three different techniques those are.
+
+1. Constructor function - This is a technique to create objects from a function. Traditionally this was the only way to implement OOP in javascript and hence the build in functions in javascript like Arrays, Maps, Set, etc are implementes using this.
+2. ES6 Classes - This is the more modern way to implement OOP in javascript. ES6 introduces classes in javascript, however these classes are not like the classes we discussed above. These are just abstraction over Constructor functions.
+
+3. Object.create() method - This is the most easiest and straight forward way to link an object to prototype. But this is not used that ofter, we will see further in details.
