@@ -35,3 +35,8 @@ console.log(sheldon.employmentStatus);
 
 console.log(john.hasOwnProperty("firstName"));
 console.log(john.hasOwnProperty("employmentStatus"));
+
+// console.log(john);
+// console.log(john.__proto__);
+// console.log(john.__proto__.__proto__);
+// console.log(john.__proto__.__proto__.__proto__);

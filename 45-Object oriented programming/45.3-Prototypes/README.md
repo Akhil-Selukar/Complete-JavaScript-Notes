@@ -130,3 +130,26 @@ console.log(john.hasOwnProperty("employmentStatus"));
 ```
 
 In above code at line `console.log(john.hasOwnProperty("firstName"));` we are checking if the property 'firstName' is of john object itself or it is from the prototype by using the method 'hasOwnProperty()' as firstName is object's own property we will get `true` as output but as 'employmentStatus' is the property from prototype hence the output for emplloymentStatus will be `false`.
+
+Now we have seen what exactly prototype is in above example, then what exactly prototypal
+inheritance means? In the earlier example when we call welcome() method on john and sheldon objects, the object was john or sheldon on which we are calling welcome() method. But if we see actual john and sheldon, there is no such method available in these objects. So in such cases javascript look for the property/method on prototype. Now the welcome() method is present there in the prototype hence it will execute that method and show us the result. This checking of method in prototype, if not available inside the object itself is called prototypal inheritance or delegation. (Because objects delegate the call of method to its prototype.)
+
+Due to this prototypal inheritance or delegatio, if we create 100 employee objects and then we can call the welcome() method on all those 100 objects without having the welcome() method directly attached to any of the object. This will significantly reduce the code duplication and performance.
+
+### Prototype chain
+
+We have already seen that for john object or for sheldon object the \_\_proto\_\_ or the prototype is the prototype of Employee constructor function. But if we observe closely the prototype of Employee coonstructor function is also an object itself. Every object has a prototype, so
+the prototype of Employee must also have it's own prototype. This will be 'Object.Prototype', as parent for all objects is a constructor function Object (javascript internal Object). So again this Object.prototype will have its own prototype, so that will be `null` value because this object is not inherited from ano other object.
+
+```javascript
+console.log(john); // john object
+console.log(john.__proto__); // prototype of Employee constructor function
+console.log(john.__proto__.__proto__); // prototype of Object constructor function
+console.log(john.__proto__.__proto__.__proto__); // null valule
+```
+
+Have a look at below diagram for better understanding.
+
+![Prototype chain (45-Object oriented programming/45.3-Prototypes/images/Prototype_chain.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/45-Object%20oriented%20programming/45.3-Prototypes/images/Prototype_chain.png)
+
+In above image we can see that the .\_\_proto\_\_ of john object is prototype of Employee constructor function while .\_\_proto\_\_ of prototype of john object is prototype of Object constructor function which is the parent. Then .\_\_proto\_\_ of Objects prototype is null as there is no more parent. This is called prototype chain.
