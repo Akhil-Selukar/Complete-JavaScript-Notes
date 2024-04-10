@@ -109,3 +109,5 @@ console.log(katrina instanceof Object);
 All the above will be 'true' because now Hr is linked to or inherited from Employee. Then Employee is linked to or inherited from Object. (in other words Hr is subset of Employee which is a subset of Object)
 
 Note: A very small thing to notice here is when we print \_\_proto\_\_ of 'katrina' object i.e. `console.log(katrina.__proto__);` then in constructor we will see Employee even though katrina is an object of Hr. This happens because of Object.create() (We modified the prototype of Hr with Employee). If required we can simply change it by using `Hr.__proto__.constructor = Hr` i.e. setting the constructor property in Hr.\_\_proto\_\_ back to Hr constructor function.
+
+Note : Here this prototype chain will support polymorphism as well. Means if method with same name exists in Employee's prototypr as well as Hr's prototype then katrina i.e. object of Hr will execute the method of it's own prototype. So here the method in parent is overriden by child.
