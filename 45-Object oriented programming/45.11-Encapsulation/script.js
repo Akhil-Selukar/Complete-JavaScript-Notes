@@ -1,40 +1,45 @@
 "use strict";
 
 class Account {
+  // public fields
+  totalBalance = 5000;
+  locale = navigator.language;
+
+  // private fields
+  #password;
+  #transactions = [];
+
   constructor(fullName, currency, password) {
     this.fullName = fullName;
     this.currency = currency;
-    this._password = password;
-    this._transactions = [];
-    this._totalBalance = 5000;
-    this._locale = navigator.language;
+    this.#password = password;
   }
 
-  _updateBalance(amount) {
-    this._totalBalance += amount;
+  #updateBalance(amount) {
+    this.totalBalance += amount;
   }
 
-  _completeTransaction(amount) {
-    this._transactions.push(amount);
-    this._updateBalance(amount);
+  #completeTransaction(amount) {
+    this.#transactions.push(amount);
+    this.#updateBalance(amount);
   }
 
-  _loanApproval(amount) {
-    if (0.1 * this._totalBalance > amount) return true;
+  #loanApproval(amount) {
+    if (0.1 * this.totalBalance > amount) return true;
     return false;
   }
 
   loanRequest(amount) {
-    if (this._loanApproval(amount)) {
+    if (this.#loanApproval(amount)) {
       console.log("Your loan is approved..!!");
-      this._completeTransaction(amount);
+      this.#completeTransaction(amount);
     } else {
       console.log("Sorry we can't approve your loan..!!");
     }
   }
 
   get accountBalance() {
-    return this._totalBalance;
+    return this.totalBalance;
   }
 }
 

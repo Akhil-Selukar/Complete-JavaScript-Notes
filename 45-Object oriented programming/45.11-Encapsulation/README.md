@@ -1,4 +1,4 @@
-## 45.11 Encapsulation part-1 (Protected)
+## 45.11 Encapsulation
 
 Encapsulation basically means hiding the internal details and exposing only features that user or other classes concerns. For example when we book a movie ticket, we just select the movie, select seats and make the payment and we get the tickets. But actually at the backend system has to check if the payment is successful or not, between your seat selection and payment confirmation does anyone else booked that ticket or not, once the ticket is successfully booked system has to mark that sear unavailable for others, system has to send the confirmation to user, etc. So all these tasks are not suppossed to be done by user. system internally should do these tasks and give the final confirmation to the user based on the outcome of all the tasks. So there is no point in making all internal processes available to user. So these processes are hidden and done in background, this is what encapsulation is. Providing only necessary information/access to user and hiding the internal details.
 
@@ -136,3 +136,74 @@ console.log(sheldonsAcc.accountBalance);
 ```
 
 Here we have added an underscore (\_) to some of the fields to mention those fields are private and we should not directly modify those fields from outside. Apart from this we do have added underscore (\_) to the methods as well to indicate the same thing.
+
+Now here the important part is that the developer must have knowledge about the convention which is being followed that if there is an underscore (\_) before a method or field name then that field isprotected and should not be accessed from outside. So this is not what we can call as complete abstraction. But recently a new feature was added to create class fields in javascript classes which protect fields and methods (But by this javascript classes are not the pure abstraction on constructor functions). By using class field we can truely make the fields and methods private and then it will not be accessable form outside and will not be a part of prototype, it will be on instance level.
+
+The syntax to implement this is adding a hash (#) at the start of field name and define them outside the constructor, and in case of methods add a # in front of method name.
+
+Note : if we dont add # before the class fields then those fields will become the public fields.
+
+Have a look at below code.
+
+```javascript
+"use strict";
+
+class Account {
+  // public fields
+  totalBalance = 5000;
+  locale = navigator.language;
+
+  // private fields
+  #password;
+  #transactions = [];
+
+  constructor(fullName, currency, password) {
+    this.fullName = fullName;
+    this.currency = currency;
+    this.#password = password;
+  }
+
+  #updateBalance(amount) {
+    this.totalBalance += amount;
+  }
+
+  #completeTransaction(amount) {
+    this.#transactions.push(amount);
+    this.#updateBalance(amount);
+  }
+
+  #loanApproval(amount) {
+    if (0.1 * this.totalBalance > amount) return true;
+    return false;
+  }
+
+  loanRequest(amount) {
+    if (this.#loanApproval(amount)) {
+      console.log("Your loan is approved..!!");
+      this.#completeTransaction(amount);
+    } else {
+      console.log("Sorry we can't approve your loan..!!");
+    }
+  }
+
+  get accountBalance() {
+    return this.totalBalance;
+  }
+}
+
+const sheldonsAcc = new Account("sheldone cooper", "USD", "1111");
+console.log(sheldonsAcc);
+
+sheldonsAcc.loanRequest(1000);
+console.log(sheldonsAcc.accountBalance);
+sheldonsAcc.loanRequest(100);
+console.log(sheldonsAcc.accountBalance);
+```
+
+In above code we have created two class fields with # symbol prepended to them which will make the fields private. So those fields will not be accessable outside. Now we have also added two fields without prepending with # symbol, those two fields are public and can be accessed from everywhere. Same goes with the methods.
+
+Now if you try to access any of the private field or method directly on 'dheldonsAcc' you will be shown an error saying 'Property is not accessible outside class because it has a private identifier.' And we can implement true encapsulation using this.
+
+It is important to notice the difference now that private methods are not added to the prototype, instead they are added separately as 'privateMethods'. Observe below structure of Account object.
+
+![private_methods.png (45-Object oriented programming/45.11-Encapsulation/images/private_methods.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/45-Object%20oriented%20programming/45.11-Encapsulation/images/private_methods.png)
