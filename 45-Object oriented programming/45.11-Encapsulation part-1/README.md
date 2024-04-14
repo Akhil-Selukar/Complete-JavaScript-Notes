@@ -82,3 +82,57 @@ we will get the output as.
 ```
 
 Here we can clearly see that without even requesting loan or getting the approval user's account balance got updated. This is not correct. We must restrict access to all these method from outside objects, this can only be called internally. To achieve this we need encapsulation.
+
+In javascript sometimes we use a convention to add an \_ (i.e. underscore) before the property or method name which we want to protect from accidental access. This is not truely protecting the menthod and fields from manipulating or calling but atleast the developer working on the code will be aware that if there is an '\_' prepended to the field or method then it should not be accessed outside the class and by that the accidental update of data or bugs can be eliminated. Have a look at below code.
+
+```javascript
+"use strict";
+
+class Account {
+  constructor(fullName, currency, password) {
+    this.fullName = fullName;
+    this.currency = currency;
+    this._password = password;
+    this._transactions = [];
+    this._totalBalance = 5000;
+    this._locale = navigator.language;
+  }
+
+  _updateBalance(amount) {
+    this._totalBalance += amount;
+  }
+
+  _completeTransaction(amount) {
+    this._transactions.push(amount);
+    this._updateBalance(amount);
+  }
+
+  _loanApproval(amount) {
+    if (0.1 * this._totalBalance > amount) return true;
+    return false;
+  }
+
+  loanRequest(amount) {
+    if (this._loanApproval(amount)) {
+      console.log("Your loan is approved..!!");
+      this._completeTransaction(amount);
+    } else {
+      console.log("Sorry we can't approve your loan..!!");
+    }
+  }
+
+  get accountBalance() {
+    return this._totalBalance;
+  }
+}
+
+const sheldonsAcc = new Account("sheldone cooper", "USD", "1111");
+console.log(sheldonsAcc);
+
+sheldonsAcc.loanRequest(1000);
+console.log(sheldonsAcc.accountBalance);
+sheldonsAcc.loanRequest(100);
+console.log(sheldonsAcc.accountBalance);
+```
+
+Here we have added an underscore (\_) to some of the fields to mention those fields are private and we should not directly modify those fields from outside. Apart from this we do have added underscore (\_) to the methods as well to indicate the same thing.
