@@ -1,4 +1,4 @@
-46.1 Geolocation API.
+## 46.1 Geolocation API.
 
 Geolocation API is a browser API just like internationalization or timers, etc which browser provides us.
 We can get the geolocation data from navigator by using `navigator.geolocation.getCurrentPosition()` method. This method accepts two callback functions. The first one will be executed when location details are received successfully, the second one is to handle failure scenarios. Have a look at below code.
