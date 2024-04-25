@@ -50,7 +50,7 @@ form.addEventListener("submit", function (e) {
   e.preventDefault();
   inputDistance.value =
     inputDuration.value =
-    inputCadence.value =
+    inputSpeed.value =
     inputElevation.value =
       "";
   form.classList.add("hidden");
