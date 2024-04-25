@@ -23,6 +23,8 @@ class Workout {
 }
 
 class Running extends Workout {
+  type = "running";
+
   constructor(coords, distance, time, speed) {
     super(coords, distance, time);
     this.speed = speed;
@@ -40,6 +42,8 @@ class Running extends Workout {
 }
 
 class Cycling extends Workout {
+  type = "cycling";
+
   constructor(coords, distance, time, elevation) {
     super(coords, distance, time);
     this.elevation = elevation;
@@ -57,6 +61,7 @@ class Cycling extends Workout {
 class App {
   #map;
   #mapEvent;
+  #workouts = [];
 
   constructor() {
     this._getPosition();
@@ -108,18 +113,63 @@ class App {
   }
 
   _newWorkout(e) {
-    // console.log("form submitted..!!");
     e.preventDefault();
+    // get data from form
+    const type = inputType.value;
+    const distance = +inputDistance.value;
+    const duration = +inputDuration.value;
+    const { lat, lng } = this.#mapEvent.latlng;
+    let workout;
+
+    // data validation for valid data
+    const validateInputs = (...inputs) =>
+      inputs.every((inp) => Number.isFinite(inp));
+
+    const checkPositive = (...inputs) => inputs.every((inp) => inp > 0);
+
+    // create object based on workout type
+    if (type === "running") {
+      const speed = +inputSpeed.value;
+      if (
+        !validateInputs(speed, distance, duration) ||
+        !checkPositive(speed, distance, duration)
+      )
+        return alert("Please enter the valid details in form.");
+
+      workout = new Running([lat, lng], distance, duration, speed);
+    }
+
+    if (type === "cycling") {
+      const elevation = +inputElevation.value;
+      if (
+        !validateInputs(elevation, distance, duration) ||
+        !checkPositive(distance, duration)
+      )
+        return alert("Please enter the valid details in form.");
+
+      workout = new Cycling([lat, lng], distance, duration, elevation);
+    }
+
+    // add created object to workout array
+    this.#workouts.push(workout);
+
+    // add marker to the map for workout
+    this.addMarker(workout);
+
+    // render the workout list to left side of application
+
+    // clear input data fields and hide the form.
+
     inputDistance.value =
       inputDuration.value =
       inputSpeed.value =
       inputElevation.value =
         "";
     form.classList.add("hidden");
+  }
 
-    const { lat, lng } = this.#mapEvent.latlng;
-
-    L.marker([lat, lng])
+  addMarker(workout) {
+    L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -128,10 +178,10 @@ class App {
           autoClose: false,
           // closeButton: false,
           closeOnClick: false,
-          className: "running-popup",
+          className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent("New location")
+      .setPopupContent(workout.type)
       .openPopup();
   }
 }
