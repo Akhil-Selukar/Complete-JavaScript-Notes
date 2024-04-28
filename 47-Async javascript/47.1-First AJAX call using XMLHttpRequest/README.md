@@ -140,7 +140,7 @@ const displayCountry = function (country) {
         <p class="country__row"><span>👫</span>${(
           +data.population / 1000000
         ).toFixed(1)} million people</p>
-        <p class="country__row"><span>🗺️</span>${data.area} sq miles</p>
+        <p class="country__row"><span>🗺️</span>${data.area} sq km</p>
         <p class="country__row"><span>🏙️</span>${data.capital[0]}</p>
     </div>
     </article>`;
