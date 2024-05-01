@@ -61,3 +61,43 @@ Now the remaining is the fetch() API call. This call is going to return a promis
 Once this task is also completed the queues will be cleared and we will have the complete output on console. So this is how by using web API environment, callback and microtask queues javascript handles asynchronous calls.
 
 ![Image-8(47-Async javascript/47.8-Async javascript under the hood/images/Image-8.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/47-Async%20javascript/47.8-Async%20javascript%20under%20the%20hood/images/Image-8.png)
+
+Now just to confirm that microtasks has priority over the callback queue we can check below example.
+
+```javascript
+console.log("First line..!!");
+setTimeout(() => console.log("Message from setTimeout()..!!"), 0);
+Promise.resolve("Message from resolved promise..!!").then((result) =>
+  console.log(result)
+);
+console.log("Last line..!!");
+```
+
+Now in above code we have a setTimeout function which will trigger after exactly 0 sec (means immediatly). Similarly we have a promise which will immediately resolve. So in this case as soon as the program is run we will have console.logs() to print, then one task in callback queue (from setTimeout) and one task in microtask queue (from the resolved promise). Now we have all these at the same time. So what will be executed first?
+
+Well the normal synchronous flow executes first so "First line..!!" will be the first output then we will have "Last line..!!". Then from two tasks in two queue we have already learnt that microtas will always have priority over callback queue. Hence "Message from resolved promise..!!" will be the next and then at the last we will have "Message from setTimeout()..!!"
+
+So the output will be
+
+```
+First line..!!
+Last line..!!
+Message from resolved promise..!!
+Message from setTimeout()..!!
+```
+
+Now the thing to keep in mind here is that whenever we have situations like above then it might happen like the task from microtask queue take some time to complete, in that case the setTimeout() function which we are expecting to execute after exactly 0 sec might not execute exactly after 0 sec. Because microtask has priority over it and that microtask is not completed.
+
+To understand this you can check below example.
+
+```javascript
+console.log("First line..!!");
+setTimeout(() => console.log("Message from setTimeout()..!!"), 0);
+Promise.resolve("Message from resolved promise..!!").then((result) => {
+  for (let i = 0; i < 10000000; i++) {}
+  console.log(result);
+});
+console.log("Last line..!!");
+```
+
+Here both mictotask and callback queue will have task at the same time and as per priority microtask will be executed first but then in the microtask we are looping over the loop 10000000 times which will definitely take some time and you can observe that even though microtask is taking time and 0 sec is already passed still the setTimeout() callback will not be called and it will be called only after the microtask is fully competed.
