@@ -31,4 +31,4 @@ const fetchCapitals = async function (country1, country2, country3) {
 fetchCapitals("sweden", "Unknown", "UAE");
 ```
 
-![any image (47-Async javascript/47.15-Promise combinator .any()/images/any.png)](<[<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/47-Async%20javascript/47.14-Promise%20combinator%20.allSettled()/images/allSettled.png>](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/47-Async%20javascript/47.15-Promise%20combinator%20.any()/images/any.png)>)
+![any image (47-Async javascript/47.15-Promise combinator .any()/images/any.png)](<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/47-Async%20javascript/47.14-Promise%20combinator%20.allSettled()/images/allSettled.png>)
