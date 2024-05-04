@@ -1,4 +1,4 @@
-## 47.12 Promise combinator (.race())
+## 47.13 Promise combinator (.race())
 
 In previous section we saw that .all() combinator takes all promises and execute them all in parallel and once all the promises are settled it returns the resultant promise with array of data from all the prommises. If any of the promise is rejected in the .all() combinator then the resultant promise will be rejected.
 

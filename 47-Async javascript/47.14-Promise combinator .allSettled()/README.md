@@ -1,4 +1,4 @@
-## 47.12 Promise combinator (.allSettled())
+## 47.14 Promise combinator (.allSettled())
 
 Till now we have seen .all() which return an array of all settled promisis and if in case any of the promimse is rejectced then the overall result of .all() will be a rejected promise. Then we saw .race() which return the first settled promise no matter it is fulfilled or rejected, if it is settled it will be returned.
 
