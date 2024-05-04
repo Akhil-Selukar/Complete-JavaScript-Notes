@@ -78,3 +78,5 @@ Now here we have added all the three async calls to a Promise.all() combinator a
 In this case as well the output will be same but if you see the sequence of execution, it will be paralllel. In this exampel the requests are less so it will not show significant impact but in case of large requests the impact is significant.
 
 ![Parallel calls (47-Async javascript/47.12-Parallel promises .all() combinator/images/Parallel calls.png)](<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/47-Async%20javascript/47.12-Parallel%20promises%20.all()%20combinator/images/Parallel%20calls.png>)
+
+The important thing to note here is that if any one of the promise is rejected from the .all() combinator then the resultant promise will be rejected. and to fulfill the resultent promise all the promises need to be fulfilled.
