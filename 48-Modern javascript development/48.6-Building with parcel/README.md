@@ -143,3 +143,5 @@ npm run build
 This will optimize and compress the code further. Once the command is executed completly have a look at html and js files in dist folder. You will see the content in the files just converted into a single line and it is very hard to read. This is the finally optimized code and now this optimized code is finally ready to go to production. Many times in many libraries you might find minified version of the files, those files are nothing but this optimized versions.
 
 > [!IMPORTANT] Just take a look at size of 'dist' folder and the size of code you have written including the dependencies downloaded and assets used, you will see the huge difference. In my case the code without parcel is of 200+Mbs and and code built by parcel is of 207kb.
+
+One more thing which we understand is parcel implesitly takes care of making the code compatable with most of the older browsers and we dont have to worry about anything, we can write our code using the ES6 features and parcel takes care of everything.
