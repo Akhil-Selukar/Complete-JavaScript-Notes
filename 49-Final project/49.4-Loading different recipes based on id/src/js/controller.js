@@ -24,10 +24,11 @@ const displayLoader = function (parentElement) {
 };
 
 const showRecipe = async function () {
-  displayLoader(recipeContainer);
   const recipeId = window.location.hash.slice(1);
-
   if (!recipeId) return;
+
+  displayLoader(recipeContainer);
+
   try {
     const response = await fetch(
       `https://forkify-api.herokuapp.com/api/v2/recipes/${recipeId}`
