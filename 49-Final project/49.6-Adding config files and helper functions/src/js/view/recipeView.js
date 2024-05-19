@@ -12,7 +12,7 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML("afterbegin", htmlMarkup);
   }
 
-  displayLoader = function () {
+  displayLoader() {
     const loader = `<div class="spinner">
     <svg>
       <use href="${icons}#icon-loader"></use>
@@ -21,7 +21,7 @@ class RecipeView {
 
     this.#clear();
     this.#parentElement.insertAdjacentHTML("afterbegin", loader);
-  };
+  }
 
   #clear() {
     this.#parentElement.innerHTML = "";
