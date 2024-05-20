@@ -7,7 +7,7 @@ const showRecipe = async function () {
     const recipeId = window.location.hash.slice(1);
 
     if (!recipeId) return;
-    recipeView.displayLoader(recipeContainer);
+    recipeView.displayLoader();
 
     // Loading the data from third party API
     await model.loadRecipe(recipeId);
