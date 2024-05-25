@@ -218,3 +218,67 @@ const controllBookmark = function () {
 Here we are simply checking if bookmarked is already true then remove recipe from bookmarks and if it is false then add the recipe in bookmarks.
 
 After this implementation the bookmark button will be fully functional. Then next thing we need to impllement is to display all the bookmarked recipes in the bookmarks section which is there in upper right corner of UI. On hover that list should display all the recipes bookmarked by user.
+
+Now in thsi top right corner list we want to display the list of recipes which are bookmarked by the user. That means we want to modify the UI hence we will need a view for this (bookmarkView.js). This view is very similar to that of the resultsView.js. The next thing is we need to call this bookmark view from controller.
+
+controller.js
+
+```javascript
+.
+.
+.
+const controllBookmark = function () {
+  // Add/Remove bookmark
+  if (!model.state.recipe.bookmarked) {
+    model.addBookmark(model.state.recipe);
+  } else {
+    model.removeBookmark(model.state.recipe.id);
+  }
+
+  // Update the UI
+  recipeView.update(model.state.recipe);
+  bookmarkView.render(model.state.bookmarks);
+};
+.
+.
+.
+```
+
+Now at this point you will see the bookmarked list is working. But there is a bug in the bookmark list it is not highlighting the correct recipe which is displayed on recipeView. This is because when we are rendering teh recipe view for any recipe we are not updting the bookmark view. Hence bookmark view is not aware about the change in recipeView. This can be fixed by simply updating the bookmarkView on rendering of the recipe.
+
+```javascript
+.
+.
+.
+
+const showRecipe = async function () {
+  try {
+    const recipeId = window.location.hash.slice(1);
+
+    if (!recipeId) return;
+    recipeView.displayLoader();
+
+    resultsView.update(model.getSearchResultsPage());
+    bookmarkView.update(model.state.bookmarks);
+
+    // Loading the data from third party API
+    await model.loadRecipe(recipeId);
+
+    // Rendering recipe to UI
+    recipeView.render(model.state.recipe);
+  } catch (e) {
+    // console.error(`error ==>> ${e}`);
+    recipeView.displayError();
+  }
+};
+
+.
+.
+.
+```
+
+Now it will work perfectly.
+
+At this point bookmark feature is kind of completed, so next part is completly optional. But still if you closely observe the code, bookmarkView.js and resultsView.js both the files are almost same except the parent element and error message. Even the htmlMarkup that they are generating is also exactly same. So it is not a good practice to repeat the same code again and again. So what we can do is we can create a child class i.e. previewView.js to the bookmarkView and resultsView which will have methods that are common for both bookmarkView and resultsView.
+
+So previewView.js will have the '\_markupPreview()' method which is common for both the views and now the bookmarkView and resultView will use this \_markupPreview() method instead of their own. Have a look at the code to understand this in better way.

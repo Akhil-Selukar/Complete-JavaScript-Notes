@@ -2,8 +2,8 @@ import View from "./view";
 import previewView from "./previewView";
 
 class ResultView extends View {
-  _parentElement = document.querySelector(".results");
-  _errorMessage = "Unable to find any recipe, please try again!";
+  _parentElement = document.querySelector(".bookmarks__list");
+  _errorMessage = "No bookmarked recipe!";
   _successMessage = "";
 
   _generateHtmlMarkup() {
