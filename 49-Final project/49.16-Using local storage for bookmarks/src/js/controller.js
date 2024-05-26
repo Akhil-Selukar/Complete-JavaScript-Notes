@@ -13,6 +13,7 @@ const showRecipe = async function () {
     recipeView.displayLoader();
 
     resultsView.update(model.getSearchResultsPage());
+    bookmarkView.update(model.state.bookmarks);
 
     // Loading the data from third party API
     await model.loadRecipe(recipeId);

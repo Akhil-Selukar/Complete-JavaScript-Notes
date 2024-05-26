@@ -89,6 +89,9 @@ const controllAddRecipe = async function (newRecipeObj) {
   // console.log(newRecipeObj);
 
   try {
+    // display loader
+    addRecipeView.displayLoader();
+
     // Send the object to model and store it.
     await model.uploadRecipe(newRecipeObj);
 
@@ -97,6 +100,12 @@ const controllAddRecipe = async function (newRecipeObj) {
 
     // display success message
     addRecipeView.displaySuccess();
+
+    // render new bookmarkView
+    bookmarkView.render(model.state.bookmarks);
+
+    // update the url
+    window.history.pushState(null, "", `#${model.state.recipe.id}`);
 
     // close the form
     setTimeout(function () {

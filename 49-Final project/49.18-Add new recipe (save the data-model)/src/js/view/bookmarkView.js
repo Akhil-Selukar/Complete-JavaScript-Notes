@@ -1,7 +1,7 @@
 import View from "./view";
 import previewView from "./previewView";
 
-class ResultView extends View {
+class BookmarkView extends View {
   _parentElement = document.querySelector(".bookmarks__list");
   _errorMessage = "No bookmarked recipe!";
   _successMessage = "";
@@ -17,4 +17,4 @@ class ResultView extends View {
   }
 }
 
-export default new ResultView();
+export default new BookmarkView();

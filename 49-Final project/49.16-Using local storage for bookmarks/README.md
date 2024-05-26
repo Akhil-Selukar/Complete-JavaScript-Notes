@@ -1,6 +1,6 @@
 ## 49.16 Using local storage for bookmarks
 
-In last section we have implemented the bookmark functionality and it is working as expected. But as soon as we refresh the page or as soon as we restart the application all the bookmarks gets removed. This is because we are not storing the bookmarked information anywhere. As we are not using any database here so we will use local storage to store this information so that the bookmarks will remain as it is even after the application si refreshed or restarted.
+In last section we have implemented the bookmark functionality and it is working as expected. But as soon as we refresh the page or as soon as we restart the application all the bookmarks gets removed. This is because we are not storing the bookmarked information anywhere. As we are not using any database here so we will use local storage to store this information so that the bookmarks will remain as it is even after the application is refreshed or restarted.
 
 Now as this operation had to do with data i.e. storing and retriving the data from local storage the code will go to the model.js.
 As soon as use add new recipe to the bookmark we must add it in local storage as well, similarly as soon as any recipe is removed from the bookmark then same should be removed from the local storage as well. In simple words we have to refresh the local storage in both the cases i.e. addition and removal of recipe from the bookmarks. So we can write a simple function which will update the bookmarks data into local storage and call that function from addBookmark() and removeBookmark() method in model.js.
@@ -37,7 +37,7 @@ const persistBookmarks = function () {
 
 Here we have created a fuunction called persistBookmarks which just add the bookmarkes array into the locastorage with key 'bookmarks'. Then we have called this function from both the methods which are adding or removing the bookmarks.
 
-After implementing the above code if we run the application and add some recipes to bookmark we will be able to see the recipies in local storage even after refresh or restart of the application just like shown in below screenshot.
+After implementing the above code if we run the application and add some recipes to bookmark we will be able to see the recipes in local storage even after refresh or restart of the application just like shown in below screenshot.
 
 ![Bookmarks in local scorage(49-Final project/49.16-Using local storage for bookmarks/notes image/bookmarks in local storage.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/49-Final%20project/49.16-Using%20local%20storage%20for%20bookmarks/notes%20image/bookmarks%20in%20local%20storage.png)
 
@@ -92,7 +92,7 @@ bookmarkView.js
 import View from "./view";
 import previewView from "./previewView";
 
-class ResultView extends View {
+class BookmarkView extends View {
   _parentElement = document.querySelector(".bookmarks__list");
   _errorMessage = "No bookmarked recipe!";
   _successMessage = "";
@@ -108,7 +108,7 @@ class ResultView extends View {
   }
 }
 
-export default new ResultView();
+export default new BookmarkView();
 ```
 
 Now we will have to create the handler function which will handle the load event and render all the bookmarks in bookmarks list.
