@@ -23,7 +23,7 @@ Once all the information is entered you will see below `package.json` file creat
   "name": "forkify",
   "version": "1.0.0",
   "description": "Recipe book for your kitchen",
-  "main": "index.js",
+  "default": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -47,9 +47,10 @@ Now after the above command is executed completly we can add parcle start and bu
   "name": "forkify",
   "version": "1.0.0",
   "description": "Recipe book for your kitchen",
+  "default": "index.js",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "author": "Akhil Selukar",
   "license": "ISC",
@@ -74,3 +75,5 @@ npm start
 Once you are done with all the above steps your application will be running on 'http://localhost:1234' and you will bet below output of starter files.
 
 ![Starter file output (49-Final project/Notes images/Starter-files.png)](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/blob/master/49-Final%20project/Notes%20images/Starter-files.png)
+
+To deploy this application you can simply run `npm build` command and wait for the comman to execute. After completion of the command you will see a dist folder at project location that dist folder you can use for deployment.
