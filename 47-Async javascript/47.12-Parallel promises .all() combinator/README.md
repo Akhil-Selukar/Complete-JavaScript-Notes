@@ -1,4 +1,4 @@
-## 47.12 Parallel promises (.add() combinator)
+## 47.12 Parallel promises (.all() combinator)
 
 Now consider a scenario where we will be given with the name of 3 countries and we want the output as an array of capital countries of those three countries. To generate the output we will have to fetch the data for all the three countries and then we will have to get the capital for those countries from the fetched data and then return the array of those capitals. Based on what all we have learned till now we can implement this method as below.
 

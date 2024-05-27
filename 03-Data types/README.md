@@ -1,4 +1,4 @@
-## 02 Javascript Data Types
+## 03 Javascript Data Types
 
 Like other programming languages javascript also has datatypes which describes what type of value is stored in the variable.
 There are total 7 primitive data types present in java.
