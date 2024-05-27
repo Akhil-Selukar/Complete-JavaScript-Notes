@@ -195,7 +195,7 @@ If you like or you are using this repository to learn javascript and improve you
     47.12 [Changing number of servings](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.12-Changing%20servings)<br>
     47.13 [Re-rending partial DOM](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.13-Re-rendering%20only%20updated%20part%20of%20DOM)<br>
     47.14 [Highlighting selected recipe](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.14-Highlighting%20the%20selected%20recipe)<br>
-    47.15 [Implementing the bookmark](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.15-Implementing%20the%20bookmark)
+    47.15 [Implementing the bookmark](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.15-Implementing%20the%20bookmark)<br>
     47.16 [Adding bookmarks to local storage](https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.16-Using%20local%20storage%20for%20bookmarks)<br>
     47.17 [Add new recipe (display new recipe form)](<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.17-Add%20new%20recipe%20(display%20the%20form)>)<br>
     47.18 [Add new recipe (save the data)](<https://github.com/Akhil-Selukar/Complete-JavaScript-Notes/tree/master/49-Final%20project/49.18-Add%20new%20recipe%20(save%20the%20data-model)>)<br>
