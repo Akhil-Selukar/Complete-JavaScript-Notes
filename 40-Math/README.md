@@ -93,3 +93,10 @@ The output for above code will be.
 12
 12
 ```
+
+> There is a method in javascript called `eval()`, this method accepts a string expression and evaluate it. For example if we pass "2 + 2" as string in eval(), it will actually calculate the value of 2 + 2 mathematically and return 4.
+
+> [!WARNING] It is very dengerous to use eval() in your code because if is a huge security risk. eval() not only works in case of maths but you can literally pass any javascript code in string format and eval() will execute that javascript code. So any bad actor on your website can execute malicious scripts on your server using eval().
+> For example
+> <br> eval("alert('Running attack script..!!')")
+> <br> Above code will actually execute the alert statement and display an alert.
